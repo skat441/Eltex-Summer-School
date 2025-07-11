@@ -1,0 +1,161 @@
+touch ${USER}_part2.log
+ls *TAB TAB*
+ls           lsb_release  lsinitramfs  lslocks      lsmod        lspci
+lsattr       lscpu        lsipc        lslogins     lsns         lsusb
+lsblk        lsfd         lsirq        lsmem        lsof
+$HIST *TAB TAB*
+$HISTCMD       $HISTCONTROL   $HISTFILE      $HISTFILESIZE  $HISTSIZE
+echo $HISTSIZE
+1000
+find . -name ".*"
+.
+./.viminfo
+./.config
+./.profile
+./.lesshst
+./.bash_logout
+./.local
+./.bash_history
+./.bashrc
+export HISTTIMEFORMAT="%d/%m/%y %T "
+history -a
+export PROMPT_COMMAND='history -a'
+DATE=$(date +%F)
+2025-07-07
+TIME=$(date +%H:%M:%S)
+12:09:21
+DATE_TIME="$DATE $TIME"
+2025-07-07 12:09:21
+find /bin/ /sbin/ -regex ".*[0-9].*"
+/bin/ping4
+/bin/pod2html
+/bin/python3.11
+/bin/ssh-argv0
+/bin/c99-gcc
+/bin/x86_64-linux-gnu-gcc-ar-12
+/bin/base64
+/bin/gcov-dump-12
+/bin/x86_64-linux-gnu-gcc-ranlib-12
+/bin/enc2xs
+/bin/x86_64-linux-gnu-gcc
+/bin/gcov-tool-12
+/bin/x86_64-linux-gnu-gcov-12
+/bin/pod2usage
+/bin/x86_64-linux-gnu-lto-dump
+/bin/x86_64
+/bin/x86_64-linux-gnu-objdump
+/bin/addr2line
+/bin/sha224sum
+/bin/py3versions
+/bin/linux32
+/bin/x86_64-linux-gnu-objcopy
+/bin/bzip2
+/bin/pdb3
+/bin/gcc-12
+/bin/x86_64-linux-gnu-readelf
+/bin/x86_64-linux-gnu-gcov-dump
+/bin/x86_64-linux-gnu-ar
+/bin/grub-mkpasswd-pbkdf2
+/bin/x86_64-linux-gnu-gcov-tool
+/bin/traceroute6.db
+/bin/md5sum
+/bin/bzip2recover
+/bin/grub-menulst2cfg
+/bin/x86_64-linux-gnu-cpp-12
+/bin/x86_64-linux-gnu-size
+/bin/x86_64-linux-gnu-gprofng
+/bin/x86_64-linux-gnu-ld
+/bin/x86_64-linux-gnu-gprof
+/bin/h2xs
+/bin/x86_64-linux-gnu-gcc-ranlib
+/bin/x86_64-linux-gnu-ranlib
+/bin/x86_64-linux-gnu-ld.gold
+/bin/x86_64-linux-gnu-as
+/bin/x86_64-linux-gnu-gold
+/bin/pod2text
+/bin/pydoc3
+/bin/x86_64-linux-gnu-nm
+/bin/x86_64-linux-gnu-elfedit
+/bin/x86_64-linux-gnu-strip
+/bin/x86_64-linux-gnu-gcc-nm-12
+/bin/perl5.36.0
+/bin/x86_64-linux-gnu-ld.bfd
+/bin/pydoc3.11
+/bin/x86_64-linux-gnu-gcov-tool-12
+/bin/b2sum
+/bin/c89
+/bin/lto-dump-12
+/bin/x86_64-linux-gnu-cpp
+/bin/x86_64-linux-gnu-lto-dump-12
+/bin/pod2man
+/bin/sha1sum
+/bin/c89-gcc
+/bin/x86_64-linux-gnu-gcc-nm
+/bin/pl2pm
+/bin/ping6
+/bin/h2ph
+/bin/x86_64-linux-gnu-c++filt
+/bin/x86_64-linux-gnu-gcc-ar
+/bin/sha512sum
+/bin/python3
+/bin/x86_64-linux-gnu-gcc-12
+/bin/gcc-ranlib-12
+/bin/x86_64-linux-gnu-gp-display-src
+/bin/base32
+/bin/pygettext3
+/bin/x86_64-linux-gnu-gp-collect-app
+/bin/x86_64-linux-gnu-gcov
+/bin/cpan5.36-x86_64-linux-gnu
+/bin/md5sum.textutils
+/bin/x86_64-linux-gnu-gp-archive
+/bin/sha384sum
+/bin/py3clean
+/bin/x86_64-linux-gnu-gcov-dump-12
+/bin/pdb3.11
+/bin/perl5.36-x86_64-linux-gnu
+/bin/c99
+/bin/x86_64-linux-gnu-strings
+/bin/linux64
+/bin/x86_64-linux-gnu-gp-display-html
+/bin/pygettext3.11
+/bin/systemd-id128
+/bin/x86_64-linux-gnu-dwp
+/bin/gcov-12
+/bin/i386
+/bin/bunzip2
+/bin/cpp-12
+/bin/x86_64-linux-gnu-gp-display-text
+/bin/x86_64-linux-gnu-addr2line
+/bin/py3compile
+/bin/grub-syslinux2cfg
+/bin/traceroute6
+/bin/diff3
+/bin/gcc-nm-12
+/bin/gcc-ar-12
+/bin/sha256sum
+/sbin/dumpe2fs
+/sbin/e2fsck
+/sbin/mkfs.ext3
+/sbin/e2freefrag
+/sbin/e2undo
+/sbin/e2scrub_all
+/sbin/tune2fs
+/sbin/e2image
+/sbin/e2label
+/sbin/e4defrag
+/sbin/e2mmpstatus
+/sbin/mke2fs
+/sbin/mkfs.ext4
+/sbin/mkfs.ext2
+/sbin/e4crypt
+/sbin/killall5
+/sbin/fsck.ext3
+/sbin/fsck.ext2
+/sbin/e2scrub
+/sbin/resize2fs
+/sbin/fsck.ext4
+/sbin/update-grub2
+PS1="\u@\h:\$(date +%H:%M)>"
+echo "PS1='\u@\h:\$(date +%H:%M)>'">>.bashrc
+echo "PS1='\u@\h:\$(date +%H:%M)>'">>.profile
+mkdir $(date +%Y):{1..12}

@@ -1,0 +1,74 @@
+screen
+w
+ 10:40:06 up  1:38, 41 users,  load average: 0.64, 0.36, 0.22
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+tech     pts/0    37.193.179.176   09:10    1:29m  0.02s  0.02s -bash
+eltex-pg pts/1    217.71.139.232   10:25    6.00s  0.00s   ?    screen
+eltex-pg pts/2    217.71.139.232   10:19    2.00s  0.00s   ?    screen -m
+eltex-pg pts/3    217.71.131.234   10:19   60.00s  0.00s   ?    -bash
+eltex-pg pts/4    217.71.131.234   10:21    9:07   0.01s  0.01s -bash
+eltex-pg pts/5    217.71.131.234   10:24    4.00s  0.01s   ?    screen
+eltex-pg pts/6    178.178.207.24   10:24   15:39   0.00s   ?    -bash
+eltex-pg pts/7    :pts/5:S.1       10:35    3:57   0.00s   ?    /usr/bin/bash
+eltex-pg pts/8    217.71.139.232   10:27   43.00s  0.01s   ?    screen
+eltex-pg pts/9    85.140.163.180   10:37    2:34   0.00s   ?    -bash
+eltex-pg pts/10   217.71.139.232   10:27   39.00s  0.00s   ?    screen
+eltex-pg pts/11   217.71.139.232   10:29   42.00s  0.01s  0.01s -bash
+eltex-pg pts/13   217.71.139.232   10:27   30.00s  0.01s   ?    screen
+eltex-pg pts/14   :pts/5:S.8       10:39   56.00s  0.00s   ?    /usr/bin/bash
+eltex-pg pts/15   217.71.139.232   10:29    6.00s  0.00s   ?    screen
+eltex-pg pts/16   :pts/8:S.0       10:33    1:49   0.00s   ?    SCREEN
+eltex-pg pts/17   217.71.139.232   10:32    3:34   0.01s  0.01s -bash
+eltex-pg pts/18   217.71.139.232   10:32    3:02   0.00s   ?    -bash
+eltex-pg pts/19   178.178.207.24   10:32   46.00s  0.01s   ?    screen
+eltex-pg pts/21   :pts/15:S.0      10:33    6.00s  0.07s  0.05s w
+eltex-pg pts/22   217.71.139.232   10:34    5:48   0.00s   ?    -bash
+eltex-pg pts/23   :pts/5:S.0       10:34    4.00s  0.00s   ?    SCREEN
+eltex-pg pts/26   :pts/1:S.0       10:36    3:34   0.00s  0.01s SCREEN
+eltex-pg pts/28   :pts/1:S.1       10:36    3:18   0.00s   ?    /usr/bin/bash
+eltex-pg pts/31   :pts/5:S.2       10:36    3:18   0.00s   ?    /usr/bin/bash
+eltex-pg pts/32   :pts/5:S.3       10:36    3:14   0.00s   ?    /usr/bin/bash
+eltex-pg pts/33   :pts/1:S.2       10:36    1.00s  0.00s   ?    /usr/bin/bash
+eltex-pg pts/34   :pts/13:S.0      10:36   30.00s  0.00s   ?    SCREEN
+eltex-pg pts/35   :pts/2:S.0       10:36    2.00s  0.00s   ?    SCREEN -m
+eltex-pg pts/36   :pts/5:S.4       10:37    3:04   0.00s   ?    /usr/bin/bash
+eltex-pg pts/37   :pts/5:S.5       10:37    2:58   0.00s   ?    /usr/bin/bash
+eltex-pg pts/38   :pts/5:S.6       10:37    2:57   0.00s   ?    /usr/bin/bash
+eltex-pg pts/39   :pts/5:S.7       10:37    2:51   0.00s   ?    /usr/bin/bash
+eltex-pg pts/40   :pts/10:S.0      10:38    1:14   0.00s   ?    SCREEN
+eltex-pg pts/41   :pts/8:S.1       10:38    1:02   0.00s   ?    /usr/bin/bash
+eltex-pg pts/42   217.71.139.232   10:39   19.00s  0.00s   ?    -bash
+eltex-pg pts/44   :pts/10:S.1      10:38   54.00s  0.00s   ?    /usr/bin/bash
+eltex-pg pts/45   217.71.139.232   10:39   51.00s  0.00s   ?    screen
+eltex-pg pts/46   :pts/45:S.0      10:39   55.00s  0.00s   ?    /usr/bin/bash
+eltex-pg pts/47   :pts/19:S.0      10:39   42.00s  0.00s   ?    SCREEN
+eltex-pg pts/48   :pts/13:S.1      10:39   29.00s  0.02s  0.02s top
+top
+screen -S pts-15.eltex-2025-summer -X sessionname top
+screen -ls
+There is a screen on:
+	1359.top	(07/07/2025 10:33:20 AM)	(Detached)
+1 Socket in /run/screen/S-eltex-pg1-v12.
+screen -r top
+Ctrl+a c
+watch /usr/bin/vmstat
+Ctrl+a "
+Ctrl+a A
+vmstat
+Ctrl+a n
+Ctrl+a d
+screen
+vi report_part1.txt
+Ctrl+a d
+screen -ls
+There are screens on:
+	14515.pts-75.eltex-2025-summer	(07/07/2025 11:21:23 AM)	(Detached)
+	1359.top	(07/07/2025 10:33:19 AM)	(Detached)
+2 Sockets in /run/screen/S-eltex-pg1-v12.
+logout
+screen -ls
+There are screens on:
+	14515.pts-75.eltex-2025-summer	(07/07/2025 11:21:23 AM)	(Detached)
+	1359.top	(07/07/2025 10:33:19 AM)	(Detached)
+2 Sockets in /run/screen/S-eltex-pg1-v12.
+screen -X quit

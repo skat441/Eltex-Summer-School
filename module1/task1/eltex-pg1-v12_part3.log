@@ -1,0 +1,27 @@
+mkdir -p D1/D2/D3
+ln ../file.txt hardlink.txt
+ln -s ../file.txt softlink.txt
+eltex-pg1-v12@eltex-2025-summer-15:01>mv file.txt ..
+eltex-pg1-v12@eltex-2025-summer-15:01>cat D3/hardlink.txt
+some text
+eltex-pg1-v12@eltex-2025-summer-15:01>cat D3/softlink.txt
+cat: D3/softlink.txt: No such file or directory
+eltex-pg1-v12@eltex-2025-summer-15:01>
+rm -r D2
+du -sh $(find / -type f -size +20M 2>/dev/null) > "${USER}_part3_gt50M.log"
+find . -mtime 1
+./.viminfo
+./.config
+./.config/procps
+./report_part1.txt
+./.local
+./.local/share
+./.local/share/nano
+./.bash_history
+./task1_part1.log
+file /usr/bin/find >> eltex-pg1-v12_part3.log
+/usr/bin/find: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=5545a6c7162d325fbe5ffabcbfe4e5521b66ce70, for GNU/Linux 3.2.0, stripped
+file /boot/initrd.img* >> eltex-pg1-v12_part3.log
+/boot/initrd.img-6.1.0-27-amd64: ASCII cpio archive (SVR4 with no CRC)
+/boot/initrd.img-6.1.0-31-amd64: ASCII cpio archive (SVR4 with no CRC)
+/boot/initrd.img-6.1.0-32-amd64: ASCII cpio archive (SVR4 with no CRC)

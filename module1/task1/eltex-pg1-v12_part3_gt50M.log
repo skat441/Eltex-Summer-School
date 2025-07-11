@@ -1,0 +1,13 @@
+31M	/usr/bin/x86_64-linux-gnu-lto-dump-12
+31M	/usr/lib/gcc/x86_64-linux-gnu/12/lto1
+32M	/usr/lib/gcc/x86_64-linux-gnu/12/cc1
+30M	/usr/lib/x86_64-linux-gnu/libicudata.so.72.1
+0	/proc/kcore
+33M	/boot/initrd.img-6.1.0-31-amd64
+33M	/boot/initrd.img-6.1.0-32-amd64
+33M	/boot/initrd.img-6.1.0-27-amd64
+38M	/var/cache/apt/srcpkgcache.bin
+38M	/var/cache/apt/pkgcache.bin
+48M	/var/lib/apt/lists/deb.debian.org_debian_dists_bookworm_main_binary-amd64_Packages
+49M	/var/lib/apt/lists/deb.debian.org_debian_dists_bookworm_main_source_Sources
+32M	/var/lib/apt/lists/deb.debian.org_debian_dists_bookworm_main_i18n_Translation-en
