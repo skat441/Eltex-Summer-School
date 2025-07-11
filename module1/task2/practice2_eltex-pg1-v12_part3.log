@@ -1,0 +1,141 @@
+git config --global user.name "skat441"
+git config --global user.email "knovopashen44@gmail.com"
+git config --global init.defaultBranch main
+apt update
+apt install git gh
+ssh-keygen -t ed25519 -f ~/.ssh/skat441
+gh auth login
+gh auth setup-git --hostname github.com
+gh repo create --public Eltex-Summer-School
+mkdir ~/Eltex-Summer-School && cd ~/Eltex-Summer-School
+echo "#This is my repos for practice in eltex" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/skat441/Eltex-Summer-School.git
+git status
+git push -u origin main
+mkdir -p module1/task1
+mkdir module1/task2
+mkdir module1/task3
+git add .
+git status
+git commit
+git push
+mkdir ~/Eltex-Summer-School_clone && cd ~/Eltex-Summer-School_clone
+git clone https://github.com/skat441/Eltex-Summer-School.git
+git add .
+git commit -m "added logs in practice2_1.log"
+git push
+git fetch
+git log origin/main
+git diff main origin/main
+diff --git a/module1/task2/practice2_eltex-pg1-v12_part1.log b/module1/task2/practice2_eltex-pg1-v12_part1.log
+new file mode 100644
+index 0000000..80adbef
+--- /dev/null
++++ b/module1/task2/practice2_eltex-pg1-v12_part1.log
+@@ -0,0 +1,85 @@
++ssh-keygen
++ssh-copy-id root@172.16.9.186
++ssh root@172.16.9.186
++scp ~/.ssh/*.pub root@172.16.9.186 /root
++diff id_rsa.pub ~/.ssh/authorized_keys
++useradd -m -s /bin/bash user1
++passwd user1
++New password:1111
++adduser user2
++adduser user3
++usermod -s /usr/sbin/nologin user3
++su user3
++This account is currently not available.
++su -s /bin/bash user3
++addgroup myusers
++usermod -G myusers user1
++usermod -G myusers user2
++usermod -G myusers user3
++id -Gn user1
++user1 myusers
++id -Gn user2
++user1 myusers
++id -Gn user3
++user1 myusers
++mkdir /opt/share
++chown :myusers /opt/share
++chmod g+wxrs /opt/share
++ls -l /opt/
++total 4
++drwxrwsr-x 2 root myusers 4096 Jul 11 03:41 share
++nano /etc/bash.bashrc
++su - user1
++umask
++0004
++su - user1
++touch /opt/share/user1.txt
++su - user2
++touch /opt/share/user2.txt
++su -s /bin/bash user3
++touch /opt/share/user3.txt
++su -s /bin/bash user3
++rm user2.txt
++ls
++user1.txt  user3.txt
++chmod +t share
++su - user2
++rm user3.txt
++rm: cannot remove 'user3.txt': Operation not permitted
++nano sudoers
++%user1 ALL=(root) /usr/bin/dmesg
++su - user1
++sudo dmesg
++chage -M 10 user3
++chage -M 10 user2
++chage -M 10 user1
++tar --totals -cvf etc_backup.tar etc_backup
++bzip2 -c etc_backup.tar >etc_backup.tar.bz2
++7z a etc_backup.tar.7z etc_backup.tar
++ls -lhs
++total 5.4M
++476K -rw-r--r-- 1 root root 475K Jul 11 04:44 a.7z
++4.0K -rwsr--r-- 1 root root   18 Jul 11 04:09 dmesg.sh
++4.0K drwxr-xr-x 3 root root 4.0K Jul 11 04:37 etc_backup
++3.4M -rw-r--r-- 1 root root 3.4M Jul 11 04:40 etc_backup.tar
++476K -rw-r--r-- 1 root root 475K Jul 11 04:44 etc_backup.tar.7z
++552K -rw-r--r-- 1 root root 552K Jul 11 04:42 etc_backup.tar.bz2
++584K -rw-r--r-- 1 root root 581K Jul 11 04:43 etc_backup.tar.gz
++nano motd
++rsync -azvh /etc /root/etc_backup
++sending incremental file list
++etc/
++etc/motd
++gunzip -c etc_backup.tar.gz > etc_backupgz.tar
++tar -uvf etc_backupgz.tar etc_backup
++etc_backup/etc/motd
++gzip -c etc_backupgz.tar >etc_backup.tar.gz
++tar -df etc_backup.tar.bz2 -C /root
++etc_backup/etc/motd: Mod time differs
++etc_backup/etc/motd: Size differs
++tar -zxvf etc_backup.tar.gz -C /root/etc_backup_gzip
++7z x etc_backup.tar.7z -o/root/etc_backup_7zip/
++tar -xvf etc_backup.tar
++diff /root/etc_backup_7zip/etc_backup/etc/motd /root/etc_backup_gzip/etc_backup/etc/motd
++1a2
++> 11.07.2025 11:47
+diff --git a/module1/task2/practice2_eltex-pg1-v12_part2.log b/module1/task2/practice2_eltex-pg1-v12_part2.log
+new file mode 100644
+index 0000000..cc907c2
+--- /dev/null
++++ b/module1/task2/practice2_eltex-pg1-v12_part2.log
+@@ -0,0 +1,1667 @@
++journalctl -b |
++grep -E "($(date '+%b %d'))" |
++awk 'function get_time(){
++        split($3,a,":",seps);
++        hours=a[1];
++        mins=a[2];
++        sec=a[3];
++        sum=sec+mins*60+hours*3600
++    }
+
+git merge
