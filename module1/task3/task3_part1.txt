@@ -1,0 +1,54 @@
+ps -eLo nlwp,pid,cmd | awk '$1>1 {print $1"\t"$2"\t"$3}' | uniq|wc| awk '{print $1}'
+11
+
+top
+press "f"
+space on RUSER to activate it in statistics
+space on VIRT,RES,SHR to not show in statistics
+arrow right to highlight and move parameter
+press "q" to exit from settings
+
+passwd
+
+top
+press "o" to go to filter
+enter "RUSER=user2"
+pid is 27738
+
+kill -15 27738
+kill -2 27738
+kill -3 27738
+kill -9 27738
+
+Changing password
+Current password:
+New password: Killed (only after SIGKILL)
+
+vim ~/file_task3.txt
+^Z
+
+[1]+ Stopped            vim ~/file_task3.txt
+sleep 600
+^Z
+[2]+ Stopped            sleep 600
+jobs
+[1]- Stopped            vim ~/file_task3.txt
+[2]+ Stopped            sleep 600
+bg %2
+[2]+ sleep 600 &
+top
+"sleep 600" pid is 27753
+renice 10 27753
+27753 (process ID) old priority 0, new priority 10
+top
+"sleep 600" NI is 10
+fg %1
+vim ~/file_task3.txt
+kill -15 27753
+jobs
+[2]+ Terminated            sleep 600
+
+trap "echo 'Меня голыми руками не возьмёшь\!'" SIGINT SIGQUIT
+Меня голыми руками не возьмёшь\!^C
+
+Меня голыми руками не возьмёшь\!^\
