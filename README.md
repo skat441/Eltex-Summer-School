@@ -1,4 +1,4 @@
-$\color{red}{\textsf{lorem ipsum}}$
-$\color{red}{\textsf{lorem ipsum}}$
-$\color{red}{\textsf{lorem ipsum}}$
-$\color{red}{\textsf{lorem ipsum}}$
+$\color{red}{\text{lorem ipsum}}
+\color{red}{\text{lorem ipsum}}
+\color{red}{\text{lorem ipsum}}
+$
