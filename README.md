@@ -1,6 +1,6 @@
 <h1>This is my repo for practice in eltex</h1>
-
-<p style="color: darkgreen;">Module 1 <span style="color: darkgreen;">Ready</span></p>
+```diff
+<p>+Module 1 <span style="color: darkgreen;">Ready</span></p>
 <p>Module 2 <span style="color: yellow;">In procces</span></p>
 <p>Module 3 <span style="color: red;">Not ready</span></p>
 <p>Module 4 <span style="color: red;">Not ready</span></p>
