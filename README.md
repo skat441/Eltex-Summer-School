@@ -2,15 +2,15 @@
 <h2>Module 1:</h2>
 
 $\Huge{\color{green}{\text{Ready}}}$
-<p>Module 2:</p>
+<h2>Module 2:</h2>
 
-$\color{yellow}{\text{In progress}}$
-<p>Module 3:</p>
+$\Huge{\color{yellow}{\text{In progress}}}$
+<h2>Module 3:</h2>
 
-$\color{red}{\text{Not ready}}$
-<p>Module 4:</p>
+$\Huge{\color{red}{\text{Not ready}}}$
+<h2>Module 4:</h2>
 
-$\color{red}{\text{Not ready}}$
-<p>Module 5:</p>
+$\Huge{\color{red}{\text{Not ready}}}$
+<h2>Module 5:</h2>
 
-$\color{red}{\text{Not ready}}$
+$\Huge{\color{red}{\text{Not ready}}}$
