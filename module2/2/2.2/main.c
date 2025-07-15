@@ -1,7 +1,20 @@
 #include <stdio.h>
 #include "header.h"
+
 int main(){
-    char answer=0;
+    CU_initialize_registry();
+    CU_pSuite suite = CU_add_suite("MathTestSuite", 0, 0);
+
+    CU_add_test(suite, "test of sum()", test_sum);
+    CU_add_test(suite, "test of neg()", test_neg);
+    CU_add_test(suite, "test of mult()", test_mult);
+    CU_add_test(suite, "test of div()", test_div);
+    CU_add_test(suite, "test of mod()", test_mod);
+
+    CU_basic_run_tests();
+    CU_cleanup_registry();
+    
+    int answer=0;
     int a,b;
     double c,d;
     int result;
@@ -38,9 +51,9 @@ int main(){
             break;
         case 4:
             printf("Enter first operand:");
-            scanf("%d",&c);
+            scanf("%lf",&c);
             printf("Enter second operand:");
-            scanf("%d",&d);
+            scanf("%lf",&d);
             fresult=div(c,d);
             printf("Result is:%.2f",fresult);
             break;
