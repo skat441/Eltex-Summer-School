@@ -1,3 +1,7 @@
 <h1>This is my repo for practice in eltex</h1>
 
-<h2 >Module 1 <span>ready</h2>
+<h2>Module 1 <span style="color: darkgreen;">Ready</span></h2>
+<h2>Module 2 <span style="color: yellow;">In procces</span></h2>
+<h2>Module 3 <span style="color: red;">Not ready</span></h2>
+<h2>Module 4 <span style="color: red;">Not ready</span></h2>
+<h2>Module 5 <span style="color: red;">Not ready</span></h2>
