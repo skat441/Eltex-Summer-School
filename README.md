@@ -1,7 +1,13 @@
 <h1>This is my repo for practice in eltex</h1>
-```diff
 <p>+Module 1 <span style="color: darkgreen;">Ready</span></p>
 <p>Module 2 <span style="color: yellow;">In procces</span></p>
 <p>Module 3 <span style="color: red;">Not ready</span></p>
 <p>Module 4 <span style="color: red;">Not ready</span></p>
 <p>Module 5 <span style="color: red;">Not ready</span></p>
+```diff
+- text in red
++ text in green
+! text in orange
+# text in gray
+@@ text in purple (and bold)@@
+```
