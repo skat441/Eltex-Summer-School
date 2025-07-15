@@ -1,6 +1,7 @@
 <h1>This is my repo for practice in eltex</h1>
-<p>+Module 1 Ready</p>
+<p>Module 1 Ready</p>
 <p>Module 2 In procces</p>
 <p>Module 3 Not ready</p>
 <p>Module 4 Not ready</p>
 <p>Module 5 Not ready</p>
+$\color{red}{\textsf{lorem ipsum}}$
