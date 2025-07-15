@@ -4,10 +4,4 @@
 <p>Module 3 <span style="color: red;">Not ready</span></p>
 <p>Module 4 <span style="color: red;">Not ready</span></p>
 <p>Module 5 <span style="color: red;">Not ready</span></p>
-```diff
-- text in red
-+ text in green
-! text in orange
-# text in gray
-@@ text in purple (and bold)@@
-```
+- ![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) `#f03c15`
