@@ -42,17 +42,18 @@ void test_mult(void){
     }
 }
 void test_div(void){
-    CU_ASSERT(div(2, 3) == 2.0/3.0);
-    CU_ASSERT(div(-1, 1) == -1);
-    CU_ASSERT(div(-1, -1) == 1);
-    CU_ASSERT(div(6, -3) == -2);
-    //CU_ASSERT(div(10, 0) == NAN);
+    for(double i=-100;i<100;i++){
+        for(double j=100;j>-100;j--){
+            if(j==0){CU_ASSERT(isnan(div(i, j)));continue;}
+            CU_ASSERT(div(i, j) == i/j);
+        }
+    }
 }
 void test_mod(void){
-    CU_ASSERT(mod(5, 3) == 2);
-    CU_ASSERT(mod(7, 2) == 1);
-    CU_ASSERT(mod(8, 2) == 0);
-    CU_ASSERT(mod(-8, 3) == -2);
-    CU_ASSERT(mod(-8, -3) == -2);
-    CU_ASSERT(mod(8, -3) == 2);
+    for(int i=-100;i<100;i++){
+        for(int j=100;j>-100;j--){
+            if(j==0){CU_ASSERT(mod(i, j)==0);continue;}
+            CU_ASSERT(mod(i, j) == i%j);
+        }
+    }
 }

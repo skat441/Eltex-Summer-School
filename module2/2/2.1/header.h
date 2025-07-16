@@ -115,13 +115,14 @@ int isContain(Person** phoneBook,int* size,int ID){
     }
     return isfound;
 }
-void changePerson(Person** phoneBook,int size, int ID, char fieldToChange, ...){
-    int pos;
+int changePerson(Person** phoneBook,int size, int ID, char fieldToChange, ...){
+    int pos=-1;
     for(int i=0;i<(size);i++){
         if(phoneBook[i]->id==ID){
             pos=i;
         }
     }
+    if (pos==-1)return 0;
     va_list args;
     va_start(args,fieldToChange);
     switch (fieldToChange)
@@ -133,6 +134,7 @@ void changePerson(Person** phoneBook,int size, int ID, char fieldToChange, ...){
         newFname[strlen(Fname)]=0;
         free(phoneBook[pos]->FirstName);
         phoneBook[pos]->FirstName=newFname;
+        return 1;
         break;
     case 2:
         char* Lname=va_arg(args,char*);
@@ -141,14 +143,17 @@ void changePerson(Person** phoneBook,int size, int ID, char fieldToChange, ...){
         newLname[strlen(Lname)]=0;
         free(phoneBook[pos]->LastName);
         phoneBook[pos]->LastName=newLname;
+        return 1;
         break;
     case 3:
         int ShowExtraInfo=va_arg(args,int);
         phoneBook[pos]->ExtraInformation=ShowExtraInfo;
+        return 1;
         break;
     case 4:
         long long newphonenumber=va_arg(args,long long);
         phoneBook[pos]->PhoneNumber=newphonenumber;
+        return 1;
         break;
     case 5:
         char* email=va_arg(args,char*);
@@ -157,14 +162,17 @@ void changePerson(Person** phoneBook,int size, int ID, char fieldToChange, ...){
         newemail[strlen(email)]=0;
         free(phoneBook[pos]->Email);
         phoneBook[pos]->Email=newemail;
+        return 1;
         break;
     case 6:
         Date newDate=va_arg(args,Date);
         phoneBook[pos]->BirthDate.day=newDate.day;
         phoneBook[pos]->BirthDate.month=newDate.month;
         phoneBook[pos]->BirthDate.year=newDate.year;
+        return 1;
         break;
     default:
+        return 0;
         break;
     }
     // Person* newP=PersonInit(ID,firstname,lastname,0);
