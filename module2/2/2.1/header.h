@@ -254,27 +254,21 @@ void test_chg_contact(void){
         switch (change_option)
         {
         case 1:
-            /* code */
             CU_ASSERT(changePerson(test_phoneBook,test_phoneBookSize,id_to_change,change_option,rndstr(10))==1);
             break;
         case 2:
-            /* code */
             CU_ASSERT(changePerson(test_phoneBook,test_phoneBookSize,id_to_change,change_option,rndstr(10))==1);
             break;
         case 3:
-            /* code */
             CU_ASSERT(changePerson(test_phoneBook,test_phoneBookSize,id_to_change,change_option,rand()%2)==1);
             break;
         case 4:
-            /* code */
             CU_ASSERT(changePerson(test_phoneBook,test_phoneBookSize,id_to_change,change_option,rand())==1);
             break;
         case 5:
-            /* code */
             CU_ASSERT(changePerson(test_phoneBook,test_phoneBookSize,id_to_change,change_option,rndstr(20))==1);
             break;
         case 6:
-            /* code */
             Date newDate;
             newDate.day=rand()%30+1;
             newDate.month=rand()%12+1;

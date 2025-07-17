@@ -49,7 +49,21 @@ int main(int argc, char* argv[]){
             printf("old:%s\nold:%s\n",str_mode,bin_mode); 
         }
         //new printf
-        if(strlen(argv[2])==3){//int view
+        if(argv[2][1]=='+' || argv[2][2]=='+' || argv[2][3]=='+' || argv[2][1]=='-' || argv[2][2]=='-' || argv[2][3]=='-'){//ugo+-rwx view
+            //get filestat
+            char* filename=argv[1];
+            struct stat buf;
+            stat(filename,&buf);
+            //change filestat to new
+            update_filestat(&buf,argv[2]);
+            //printf new filestat
+            //printf("new:%o\n",buf.st_mode&0777); 
+            char str_mode[10]={0};
+            char bin_mode[10]={0};
+            intToSymb(buf.st_mode&0777,str_mode,bin_mode);
+            printf("new:%s\nnew:%s\n",str_mode,bin_mode); 
+        }
+        else if(strlen(argv[2])==3){//int view
             int mode;
             sscanf(argv[2],"%o",&mode);
             char str_mode[10]={0};
