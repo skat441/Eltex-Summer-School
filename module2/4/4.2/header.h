@@ -31,35 +31,40 @@ void addValue(List* list, int val){
         list->head=newNode;
         list->last=newNode;
     }
-    else if(list->head==list->last){//one element in list
-        Node* newNode=createNode(val);
-        if(list->head->priority<newNode->priority){//priorty less 
-            list->head->nextP=newNode;
-            list->last=newNode;
-        }
-        else{
-            list->head=newNode;
-            newNode->nextP=list->last;
-        }
-    }
     else{
         Node* newNode=createNode(val);
-        Node* iNode=list->head;
-        Node* tmpNode=NULL;
-        for(;iNode!=NULL && iNode->priority < newNode->priority;){tmpNode=iNode;iNode=iNode->nextP;}
-        if(iNode==NULL){//new el is last
-            list->last->nextP=newNode;
-            list->last=newNode;
-        }
-        else if(iNode==list->head){//new element is first
-            newNode->nextP=list->head;
-            list->head=newNode;
-        }
-        else{//new el is between two el
-            tmpNode->nextP=newNode;
-            newNode->nextP=iNode;
-        }
+        newNode->nextP=list->head;
+        list->head=newNode;
     }
+    // else if(list->head==list->last){//one element in list
+    //     Node* newNode=createNode(val);
+    //     if(list->head->priority<newNode->priority){//priorty less 
+    //         list->head->nextP=newNode;
+    //         list->last=newNode;
+    //     }
+    //     else{
+    //         list->head=newNode;
+    //         newNode->nextP=list->last;
+    //     }
+    // }
+    // else{
+    //     Node* newNode=createNode(val);
+    //     Node* iNode=list->head;
+    //     Node* tmpNode=NULL;
+    //     for(;iNode!=NULL && iNode->priority < newNode->priority;){tmpNode=iNode;iNode=iNode->nextP;}
+    //     if(iNode==NULL){//new el is last
+    //         list->last->nextP=newNode;
+    //         list->last=newNode;
+    //     }
+    //     else if(iNode==list->head){//new element is first
+    //         newNode->nextP=list->head;
+    //         list->head=newNode;
+    //     }
+    //     else{//new el is between two el
+    //         tmpNode->nextP=newNode;
+    //         newNode->nextP=iNode;
+    //     }
+    // }
 }
 
 unsigned int getFirstValue(List* list){
