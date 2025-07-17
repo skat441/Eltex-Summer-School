@@ -3,11 +3,22 @@
 #include "header.h"
 
 int main(){
-    Person** phoneBook=malloc(sizeof(Person*));
+    srand(time(NULL));
+    CU_initialize_registry();
+    CU_pSuite suite = CU_add_suite("MathTestSuite", 0, 0);
+
+    CU_add_test(suite, "test of add()", test_add_contact);
+    CU_add_test(suite, "test of chg()", test_chg_contact);
+    CU_add_test(suite, "test of del()", test_del_contact);
+
+    CU_basic_run_tests();
+    CU_cleanup_registry();      
+
+    Person** phoneBook=NULL;
     int id=1;
     int ID;
     char isfound;
-    char answer=0;
+    int answer=0;
     char buffer[100]={0};
     char fname[100]={0};
     char lname[100]={0};
@@ -22,7 +33,7 @@ int main(){
         fseek(stdin,0,SEEK_END);
         switch (answer)
         {
-        case 0:
+        case 0://add contact
             Person* newP;
             printf("Enter Person Firstname:");
             scanf("%s",buffer);
@@ -58,41 +69,42 @@ int main(){
             }
             id++;
             //printf("%d",phoneBookSize);
-            phoneBook=AddContact(phoneBook,&phoneBookSize,newP);
+            printf("%d\n",AddContact(&phoneBook,&phoneBookSize,newP));
+            //printf("%p\n", phoneBook);
             //printf("%d",phoneBookSize);
             break;
-        case 1:
+        case 1://delete contact
             ID=0;
             isfound=0;
             printf("Enter person id:");
             scanf("%d",&ID);
             fseek(stdin,0,SEEK_END);
             //
-            isfound=isContain(phoneBook,&phoneBookSize,ID);
-            //
-            if(!isfound){
-                printf("\nPerson with id=%d not found!!!\n",ID);
-            }
-            else{
+            // isfound=isContain(phoneBook,&phoneBookSize,ID);
+            // //
+            // if(!isfound){
+            //     printf("\nPerson with id=%d not found!!!\n",ID);
+            // }
+            // else{
                 //
-                phoneBook=deleteContact(phoneBook,&phoneBookSize,ID);
+                printf("%d",deleteContact(&phoneBook,&phoneBookSize,ID));
                 //
-                printf("\nPerson with id=%d deleted!!!\n",ID);
-            }
+                //printf("\nPerson with id=%d deleted!!!\n",ID);
+            //}
             break;
-        case 2:
+        case 2://change contact
             ID=0;
             isfound=0;
             printf("Enter person id:");
             scanf("%d",&ID);
             fseek(stdin,0,SEEK_END);
             //
-            isfound=isContain(phoneBook,&phoneBookSize,ID);
-            //
-            if(!isfound){
-                printf("\nPerson with id=%d not found!!!\n",ID);
-            }
-            else{
+            // isfound=isContain(phoneBook,&phoneBookSize,ID);
+            // //
+            // if(!isfound){
+            //     printf("\nPerson with id=%d not found!!!\n",ID);
+            // }
+            // else{
                 int feildToChange=0;
                 printf("1-Firstname\n2-Lastname\n3-ShowExtraInfo\n4-Phonenumber\n5-Email\n6-Birthdate\nEnter field number to change:");
                 scanf("%d",&feildToChange);
@@ -103,32 +115,32 @@ int main(){
                     printf("Enter Person Firstname:");
                     scanf("%s",buffer);
                     strncpy(fname,buffer,strlen(buffer));
-                    changePerson(phoneBook,phoneBookSize,ID,1,fname);
+                    printf("%d",changePerson(phoneBook,phoneBookSize,ID,1,fname));
                     break;
                 case 2:
                     printf("Enter Person Lastname:");
                     scanf("%s",buffer);
                     strncpy(lname,buffer,strlen(buffer));
-                    changePerson(phoneBook,phoneBookSize,ID,2,lname);
+                    printf("%d",changePerson(phoneBook,phoneBookSize,ID,2,lname));
                     break;
                 case 3:
                     int newvalue;
                     printf("ExtraInfo?[1/0]:");
                     scanf("%d",&newvalue);
-                    changePerson(phoneBook,phoneBookSize,ID,3,newvalue);
+                    printf("%d",changePerson(phoneBook,phoneBookSize,ID,3,newvalue));
                     break;
                 case 4:
                     long long newphone=0;
                     printf("newphonenumber:");
                     scanf("%llu",&newphone);
-                    changePerson(phoneBook,phoneBookSize,ID,4,newphone);
+                    printf("%d",changePerson(phoneBook,phoneBookSize,ID,4,newphone));
                     break;
                 case 5:
                     char newEmail[100];
                     printf("Enter Person email:");
                     scanf("%s",buffer);
                     strncpy(newEmail,buffer,strlen(buffer));
-                    changePerson(phoneBook,phoneBookSize,ID,5,newEmail);
+                    printf("%d",changePerson(phoneBook,phoneBookSize,ID,5,newEmail));
                     break;
                 case 6:
                     Date date;
@@ -138,13 +150,13 @@ int main(){
                     scanf("%d",&date.month);
                     printf("Enter Person birth year:");
                     scanf("%d",&date.year);
-                    changePerson(phoneBook,phoneBookSize,ID,6,date);
+                    printf("%d",changePerson(phoneBook,phoneBookSize,ID,6,date));
                     break;
                 default:
                     break;
                 }
-                printf("\nPerson with id=%d changed!!!\n",ID);
-            }
+                //printf("\nPerson with id=%d changed!!!\n",ID);
+            //}
             break;
         case 3:
             //
@@ -160,3 +172,4 @@ int main(){
     }
     return 1;
 }
+
