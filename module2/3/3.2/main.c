@@ -32,10 +32,10 @@ int main(int argc, char* argv[]){
     srand(time(NULL)); 
     for(int i=0;i<N;i++){
         newIP=0;
-        int r=192;
+        int r=rand()%256;
         newIP=newIP | r;
         newIP=newIP<<8;
-        r=168;
+        r=rand()%256;
         newIP=newIP | r;
         newIP=newIP<<8;
         r=rand()%3;

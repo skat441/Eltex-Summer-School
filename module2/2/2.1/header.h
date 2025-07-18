@@ -223,7 +223,7 @@ int test_phoneBookSize=0;
 
 void test_add_contact(void){
     printf("Test adding to phonebook:\n");
-    for(int i=1;i<30;i++){
+    for(int i=1;i<200;i++){
         Person* newP = PersonInit(i,rndstr(10),rndstr(10),0);
         CU_ASSERT(AddContact(&test_phoneBook,&test_phoneBookSize,newP)==1);printf("added id %d\n",i);
     }
@@ -233,7 +233,7 @@ void test_del_contact(void){
     printf("Test delete operation to phonebook:\n");
     int id_to_del=rand()%10;
     for(int i=0;i<300;i++){
-        id_to_del=rand()%29+1;
+        id_to_del=rand()%200+1;
         printf("id to del is:%d\n",id_to_del);
         if(isContain(test_phoneBook,&test_phoneBookSize,id_to_del)){//if id contains in phonebook, delete operation will send 1
             printf("\tdelete id:%d\n",id_to_del);
@@ -248,8 +248,8 @@ void test_del_contact(void){
 void test_chg_contact(void){
     int id_to_change=0;
     int change_option=0;
-    for(int i=0;i<300;i++){
-        id_to_change=rand()%29+1;
+    for(int i=0;i<600;i++){
+        id_to_change=rand()%199+1;
         change_option=rand()%6+1;
         switch (change_option)
         {

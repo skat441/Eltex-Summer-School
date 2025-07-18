@@ -15,7 +15,7 @@ int main(int argc, char* argv[]){
             char* filename=argv[1];
             struct stat buf;
             stat(filename,&buf);
-            printf("%o\n",buf.st_mode&0777); 
+            //printf("%o\n",buf.st_mode&0777); 
             char str_mode[10]={0};
             char bin_mode[10]={0};
             intToSymb(buf.st_mode&0777,str_mode,bin_mode);
@@ -29,8 +29,9 @@ int main(int argc, char* argv[]){
             sscanf(argv[1],"%o",&mode);
             char str_mode[10]={0};
             char bin_mode[10]={0};
+            printf("old:");
             intToSymb(mode,str_mode,bin_mode);
-            printf("old:%o\nold:%s\nold:%s\n",mode,str_mode,bin_mode);
+            printf("\nold:%s\nold:%s\n",str_mode,bin_mode);
         }
         else if(strlen(argv[1])==9 && (argv[1][0]=='r'||argv[1][0]=='-')){//symb view
             char bin_mode[10];
@@ -42,14 +43,14 @@ int main(int argc, char* argv[]){
             char* filename=argv[1];
             struct stat buf;
             stat(filename,&buf);
-            printf("old:%o\n",buf.st_mode&0777); 
+            //printf("old:%o\n",buf.st_mode&0777); 
             char str_mode[10]={0};
             char bin_mode[10]={0};
             intToSymb(buf.st_mode&0777,str_mode,bin_mode);
             printf("old:%s\nold:%s\n",str_mode,bin_mode); 
         }
         //new printf
-        if(argv[2][1]=='+' || argv[2][2]=='+' || argv[2][3]=='+' || argv[2][1]=='-' || argv[2][2]=='-' || argv[2][3]=='-'){//ugo+-rwx view
+        if(argv[2][1]=='+' || argv[2][2]=='+' || argv[2][3]=='+' || argv[2][1]=='-' || argv[2][2]=='-' || argv[2][3]=='-' || argv[2][1]=='=' || argv[2][2]=='=' || argv[2][3]=='='){//ugo+-rwx view
             //get filestat
             char* filename=argv[1];
             struct stat buf;
@@ -69,7 +70,7 @@ int main(int argc, char* argv[]){
             char str_mode[10]={0};
             char bin_mode[10]={0};
             intToSymb(mode,str_mode,bin_mode);
-            printf("new:%o\nnew:%s\nnew:%s\n",mode,str_mode,bin_mode);
+            printf("new:%s\nnew:%s\n",str_mode,bin_mode);
         }
         else if(strlen(argv[2])==9 && (argv[2][0]=='r'||argv[2][0]=='-')){//symb or bin view
             char bin_mode[10];
