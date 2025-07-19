@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
+#include <CUnit/CUnit.h>
 typedef struct Date
 {
     char day;
@@ -104,34 +105,36 @@ Node* getINodeById(Node* head, int id){
 }
 
 
-Node* insertPerson(Node* head, Person* newP){
-    if(newP==NULL)return head;
-    if(head==NULL){//empty list
+int insertPerson(Node** head, Person* newP){
+    if(newP==NULL)return 0;
+    if((*head)==NULL){//empty list
         Node* newEl=malloc(sizeof(Node));
         newEl->p=newP;
         newEl->nextP=NULL;
         newEl->prevP=NULL;
-        return newEl;
+        (*head)=newEl;
+        return 1;
     }
-    else if(head->nextP==NULL){//One element in list
+    else if((*head)->nextP==NULL){//One element in list
         Node* newEl=malloc(sizeof(Node));
         newEl->p=newP;
-        if(strcmp(newP->FirstName,head->p->FirstName) > 0){//add to end of list
-            newEl->prevP=head;
+        if(strcmp(newP->FirstName,(*head)->p->FirstName) > 0){//add to end of list
+            newEl->prevP=(*head);
             newEl->nextP=NULL;
-            head->nextP=newEl;
-            return head;
+            (*head)->nextP=newEl;
+            return 1;
         }
         else{//add to begining of list
-            newEl->nextP=head;
+            newEl->nextP=(*head);
             newEl->prevP=NULL;
-            head->prevP=newEl;
-            head->nextP=NULL;
-            return newEl;
+            (*head)->prevP=newEl;
+            (*head)->nextP=NULL;
+            (*head)=newEl;
+            return 1;
         }
     }
     else{//elements more then one
-        Node* iNode=head;
+        Node* iNode=(*head);
         Node* tmpNode=NULL;
         for(;iNode!=NULL && (strcmp(newP->FirstName,iNode->p->FirstName) > 0);){tmpNode=iNode;iNode=iNode->nextP;}
         if(iNode==NULL){//new Element is last, last element is tmpNode
@@ -140,15 +143,16 @@ Node* insertPerson(Node* head, Person* newP){
             newEl->nextP=NULL;
             newEl->prevP=tmpNode;
             tmpNode->nextP=newEl;
-            return head;
+            return 1;
         }
-        else if(iNode==head){//new element is first
+        else if(iNode==(*head)){//new element is first
             Node* newEl=malloc(sizeof(Node));
             newEl->p=newP;
             newEl->prevP=NULL;
-            newEl->nextP=head;
-            head->prevP=newEl;
-            return newEl;
+            newEl->nextP=(*head);
+            (*head)->prevP=newEl;
+            (*head)=newEl;
+            return 1;
         }
         else{//new element is between elements, left element is tmpNode, right element is iNode
             Node* newEl=malloc(sizeof(Node));
@@ -157,10 +161,10 @@ Node* insertPerson(Node* head, Person* newP){
             newEl->prevP=tmpNode;
             tmpNode->nextP=newEl;
             iNode->prevP=newEl;
-            return head;
+            return 1;
         }
     }
-    return head;
+    return 0;
 }
 
 void viewList(Node* head){
@@ -284,40 +288,41 @@ Node* clearList(Node* head){
     return NULL;
 }
 
-Node* deletePerson(Node* head, int id){
-    if(head==NULL)return NULL;
-    Node* delNode=getINodeById(head, id);
-    if(delNode==NULL)return head;
+int deletePerson(Node** head, int id){
+    if((*head)==NULL)return 0;
+    Node* delNode=getINodeById((*head), id);
+    if(delNode==NULL)return 0;
     else{
         Node* rightNode=delNode->nextP;
         Node* leftNode=delNode->prevP;
         if(rightNode==leftNode){//only one element in list
             PersonFree(delNode->p);
             free (delNode);
-            return NULL;
+            (*head)=NULL;
+            return 1;
         }
-        else if(delNode==head){//del element is head(first)
-            PersonFree(head->p);
-            head->nextP->prevP=NULL;
-            head=head->nextP;
+        else if(delNode==(*head)){//del element is head(first)
+            PersonFree((*head)->p);
+            (*head)->nextP->prevP=NULL;
+            (*head)=(*head)->nextP;
             free(delNode);
-            return head;
+            return 1;
         }
         else if(delNode->nextP==NULL){//del element is last
             delNode->prevP->nextP=NULL;
             PersonFree(delNode->p);
             free(delNode);
-            return head;
+            return 1;
         }
         else{//del element is between left and right el
             leftNode->nextP=rightNode;
             rightNode->prevP=leftNode;
             PersonFree(delNode->p);
             free(delNode);
-            return head;
+            return 1;
         }
     }
-    return head;
+    return 0;
 }
 
 int isContainList(Node* head, int id){
@@ -327,9 +332,10 @@ int isContainList(Node* head, int id){
     return 0;
 }
 
-void changePersonList(Node* head, int ID, char fieldToChange, ...){
+int changePersonList(Node* head, int ID, char fieldToChange, ...){
     int pos;
     Node* changeNode=getINodeById(head,ID);
+    if (changeNode==NULL)return 0;
     va_list args;
     va_start(args,fieldToChange);
     switch (fieldToChange)
@@ -341,6 +347,7 @@ void changePersonList(Node* head, int ID, char fieldToChange, ...){
         newFname[strlen(Fname)]=0;
         free(changeNode->p->FirstName);
         changeNode->p->FirstName=newFname;
+        return 1;
         break;
     case 2:
         char* Lname=va_arg(args,char*);
@@ -349,14 +356,17 @@ void changePersonList(Node* head, int ID, char fieldToChange, ...){
         newLname[strlen(Lname)]=0;
         free(changeNode->p->LastName);
         changeNode->p->LastName=newLname;
+        return 1;
         break;
     case 3:
         int ShowExtraInfo=va_arg(args,int);
         changeNode->p->ExtraInformation=ShowExtraInfo;
+        return 1;
         break;
     case 4:
         long long newphonenumber=va_arg(args,long long);
         changeNode->p->PhoneNumber=newphonenumber;
+        return 1;
         break;
     case 5:
         char* email=va_arg(args,char*);
@@ -365,14 +375,103 @@ void changePersonList(Node* head, int ID, char fieldToChange, ...){
         newemail[strlen(email)]=0;
         free(changeNode->p->Email);
         changeNode->p->Email=newemail;
+        return 1;
         break;
     case 6:
         Date newDate=va_arg(args,Date);
         changeNode->p->BirthDate.day=newDate.day;
         changeNode->p->BirthDate.month=newDate.month;
         changeNode->p->BirthDate.year=newDate.year;
+        return 1;
         break;
     default:
+        return 0;
         break;
     }
+}
+
+//Testing part
+char *rndstr(size_t length) {
+
+    static char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,.-#'?!";        
+    char *randomString = NULL;
+
+    if (length) {
+        randomString = malloc(sizeof(char) * (length +1));
+
+        if (randomString) {            
+            for (int n = 0;n < length;n++) {            
+                int key = rand() % (int)(sizeof(charset) -1);
+                randomString[n] = charset[key];
+            }
+
+            randomString[length] = '\0';
+        }
+    }
+
+    return randomString;
+}
+
+Node* test_phoneBook=NULL;
+int test_phoneBookSize=0;
+
+void test_add_contact(void){
+    printf("Test adding to phonebook:\n");
+    for(int i=1;i<200;i++){
+        Person* newP = PersonInit(i,rndstr(10),rndstr(10),0);
+        CU_ASSERT(insertPerson(&test_phoneBook,newP)==1);printf("added id %d\n",i);
+    }
+    viewList(test_phoneBook);
+}
+void test_chg_contact(void){
+    int id_to_change=0;
+    int change_option=0;
+    for(int i=0;i<600;i++){
+        id_to_change=rand()%199+1;
+        change_option=rand()%6+1;
+        switch (change_option)
+        {
+        case 1:
+            CU_ASSERT(changePersonList(test_phoneBook,id_to_change,change_option,rndstr(10))==1);
+            break;
+        case 2:
+            CU_ASSERT(changePersonList(test_phoneBook,id_to_change,change_option,rndstr(10))==1);
+            break;
+        case 3:
+            CU_ASSERT(changePersonList(test_phoneBook,id_to_change,change_option,rand()%2)==1);
+            break;
+        case 4:
+            CU_ASSERT(changePersonList(test_phoneBook,id_to_change,change_option,rand())==1);
+            break;
+        case 5:
+            CU_ASSERT(changePersonList(test_phoneBook,id_to_change,change_option,rndstr(20))==1);
+            break;
+        case 6:
+            Date newDate;
+            newDate.day=rand()%30+1;
+            newDate.month=rand()%12+1;
+            newDate.year=rand()%40+1980;
+            CU_ASSERT(changePersonList(test_phoneBook,id_to_change,change_option,newDate)==1);
+            break;
+        default:
+            break;
+        }
+    }
+    viewList(test_phoneBook);
+}
+void test_del_contact(void){
+    printf("Test delete operation to phonebook:\n");
+    int id_to_del=rand()%10;
+    for(int i=0;i<300;i++){
+        id_to_del=rand()%200+1;
+        printf("id to del is:%d\n",id_to_del);
+        if(isContainList(test_phoneBook,id_to_del)){//if id contains in phonebook, delete operation will send 1
+            printf("\tdelete id:%d\n",id_to_del);
+            CU_ASSERT(deletePerson(&test_phoneBook,id_to_del)==1);
+        }
+        else{
+            CU_ASSERT(deletePerson(&test_phoneBook,id_to_del)==0);
+        }
+    }
+    test_phoneBook=clearList(test_phoneBook);
 }

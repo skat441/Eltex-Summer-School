@@ -186,19 +186,20 @@ Node* rebalanceTree(Node* node){
     return node;
 }
 
-void insertPerson(Tree* tree, Person* newP){
-    printf("\n\nInsert person with id:%d", newP->id);
+int insertPerson(Tree* tree, Person* newP){
+    //printf("\n\nInsert person with id:%d\n", newP->id);
     if(tree->root==NULL){
         Node* newNode=createNewNode(newP);
         newNode->height=0;
         tree->root=newNode;
-        return;
+        return 1;
     }
     recursiveInsert(tree->root,newP);
     tree->leftHeight = calculateHeight(tree->root->left);
     tree->rightHeight = calculateHeight(tree->root->right);
     if(!checkBalance(tree->root))tree->root=rebalanceTree(tree->root);
     recalcHeight(tree->root,0);
+    return 1;
 }
 
 
@@ -266,39 +267,43 @@ Node* getParent(Node* node,int id){
     else{return NULL;}
 }
 
-void deletePerson(Tree* tree, int id){
-    printf("\n\nDelete person with id:%d",id);
+int deletePerson(Tree* tree, int id){
+    //printf("\n\nDelete person with id:%d\n",id);
+    int isDeleted=0;
     if(tree->root==NULL){
-        return;
+        return 0;
     }
     else if(tree->root->right==NULL && tree->root->left==NULL && id==tree->root->p->id){//delete root 0 child
         free(tree->root);
         tree->root=NULL;
         tree->leftHeight=0;
         tree->rightHeight=0;
-        return;
+        return 1;
     }
     else if(getNodeWithId(tree->root, id)==tree->root){//delete root with change
         if(tree->root->right!=NULL){//2 child
             Node* tmpRoot = tree->root;
             tree->root=tree->root->right;
-            tree->root->left->left=tmpRoot->left;
+            tree->root->left=tmpRoot->left;
             free(tmpRoot);
+            isDeleted=1;
         }
         else if(tree->root->left!=NULL){//1 child
             Node* tmpRoot = tree->root;
             tree->root=tree->root->left;
             free(tmpRoot);
+            isDeleted=1;
         }
         tree->root->height=0;
     }
     else{
         Node* delNode=getNodeWithId(tree->root, id);
-        printf("get delNode:%d id:%d",delNode,delNode->p->id);
+        if(delNode==NULL)return 0;
+        printf("get delNode:%p id:%d",delNode,delNode->p->id);
         if(delNode!=NULL){
             if(delNode->left==NULL && delNode->right==NULL){//leaf delete
                 Node* tmpParent=getParent(tree->root,id);
-                printf("get tmpParent:%d id:%d",tmpParent,tmpParent->p->id);
+                printf("get tmpParent:%p id:%d",tmpParent,tmpParent->p->id);
                 if(tmpParent->left==delNode){//leaf is left 
                     free(delNode);
                     tmpParent->left=NULL;
@@ -307,6 +312,7 @@ void deletePerson(Tree* tree, int id){
                     free(delNode);
                     tmpParent->right=NULL;
                 }
+                isDeleted=1;
             }
             else if( (delNode->right==NULL && delNode->left!=NULL)||(delNode->right!=NULL && delNode->left==NULL) ){//only 1 child
                 Node* tmpParent=getParent(tree->root,id);
@@ -320,6 +326,7 @@ void deletePerson(Tree* tree, int id){
                     if(delNode->left!=NULL)tmpParent->right=delNode->left;
                     free(delNode);
                 }
+                isDeleted=1;
             }
             else if(delNode->right!=NULL && delNode->left!=NULL){//delNode has 2 child
                 Node* tmpParent=getParent(tree->root,id);
@@ -334,7 +341,7 @@ void deletePerson(Tree* tree, int id){
                     tmpParent->right->left=delNode->left;
                     free(delNode);
                 }
-
+                isDeleted=1;
             }
         }
     }
@@ -342,11 +349,12 @@ void deletePerson(Tree* tree, int id){
     tree->rightHeight = calculateHeight(tree->root->right);
     if(!checkBalance(tree->root))tree->root=rebalanceTree(tree->root);
     recalcHeight(tree->root,0);
+    return isDeleted;
 }
 
-void changePersonList(Node* head, int ID, char fieldToChange, ...){
-    int pos;
+int changePersonList(Node* head, int ID, char fieldToChange, ...){
     Node* changeNode=getNodeWithId(head,ID);
+    if(changeNode==NULL)return 0;
     va_list args;
     va_start(args,fieldToChange);
     switch (fieldToChange)
@@ -358,6 +366,7 @@ void changePersonList(Node* head, int ID, char fieldToChange, ...){
         newFname[strlen(Fname)]=0;
         free(changeNode->p->FirstName);
         changeNode->p->FirstName=newFname;
+        return 1;
         break;
     case 2:
         char* Lname=va_arg(args,char*);
@@ -366,14 +375,17 @@ void changePersonList(Node* head, int ID, char fieldToChange, ...){
         newLname[strlen(Lname)]=0;
         free(changeNode->p->LastName);
         changeNode->p->LastName=newLname;
+        return 1;
         break;
     case 3:
         int ShowExtraInfo=va_arg(args,int);
         changeNode->p->ExtraInformation=ShowExtraInfo;
+        return 1;
         break;
     case 4:
         long long newphonenumber=va_arg(args,long long);
         changeNode->p->PhoneNumber=newphonenumber;
+        return 1;
         break;
     case 5:
         char* email=va_arg(args,char*);
@@ -382,14 +394,17 @@ void changePersonList(Node* head, int ID, char fieldToChange, ...){
         newemail[strlen(email)]=0;
         free(changeNode->p->Email);
         changeNode->p->Email=newemail;
+        return 1;
         break;
     case 6:
         Date newDate=va_arg(args,Date);
         changeNode->p->BirthDate.day=newDate.day;
         changeNode->p->BirthDate.month=newDate.month;
         changeNode->p->BirthDate.year=newDate.year;
+        return 1;
         break;
     default:
+        return 0;
         break;
     }
 }

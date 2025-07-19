@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "header.h"
+#include <time.h>
 
 int main(){
     // Person** phoneBook=malloc(sizeof(Person*));
@@ -19,15 +20,26 @@ int main(){
     // viewList(head);
     int id=1;
 
+    srand(time(NULL));
+    CU_initialize_registry();
+    CU_pSuite suite = CU_add_suite("ListTestSuite", 0, 0);
+
+    CU_add_test(suite, "test of add()", test_add_contact);
+    CU_add_test(suite, "test of chg()", test_chg_contact);
+    CU_add_test(suite, "test of del()", test_del_contact);
+
+    CU_basic_run_tests();
+    CU_cleanup_registry();
+
     Person* newPerson1 = PersonInit(id,"Ford","Harrison",0);
     id++;
     Person* newPerson2 = PersonInit(id,"Harry","Potter",0);
     id++;
     Person* newPerson3 = PersonInit(id,"Josh","Woods",0);
     id++;
-    head=insertPerson(head,newPerson1);
-    head=insertPerson(head,newPerson2);
-    head=insertPerson(head,newPerson3);
+    insertPerson(&head,newPerson1);
+    insertPerson(&head,newPerson2);
+    insertPerson(&head,newPerson3);
     int ID;
     char isfound;
     char answer=0;
@@ -81,7 +93,7 @@ int main(){
             }
             id++;
             //printf("%d",phoneBookSize);
-            head=insertPerson(head,newP);
+            printf("%d\n",insertPerson(&head,newP));
             //printf("%d",phoneBookSize);
             break;
         case 1:
@@ -98,7 +110,7 @@ int main(){
             }
             else{
                 //
-                head=deletePerson(head,ID);
+                printf("%d",deletePerson(&head,ID));
                 //
                 printf("\nPerson with id=%d deleted!!!\n",ID);
             }
@@ -126,32 +138,32 @@ int main(){
                     printf("Enter Person Firstname:");
                     scanf("%s",buffer);
                     strncpy(fname,buffer,strlen(buffer));
-                    changePersonList(head,ID,1,fname);
+                    printf("%d",changePersonList(head,ID,1,fname));
                     break;
                 case 2:
                     printf("Enter Person Lastname:");
                     scanf("%s",buffer);
                     strncpy(lname,buffer,strlen(buffer));
-                    changePersonList(head,ID,2,lname);
+                    printf("%d",changePersonList(head,ID,2,lname));
                     break;
                 case 3:
                     int newvalue;
                     printf("ExtraInfo?[1/0]:");
                     scanf("%d",&newvalue);
-                    changePersonList(head,ID,3,newvalue);
+                    printf("%d",changePersonList(head,ID,3,newvalue));
                     break;
                 case 4:
                     long long newphone=0;
                     printf("newphonenumber:");
                     scanf("%llu",&newphone);
-                    changePersonList(head,ID,4,newphone);
+                    printf("%d",changePersonList(head,ID,4,newphone));
                     break;
                 case 5:
                     char newEmail[100];
                     printf("Enter Person email:");
                     scanf("%s",buffer);
                     strncpy(newEmail,buffer,strlen(buffer));
-                    changePersonList(head,ID,5,newEmail);
+                    printf("%d",changePersonList(head,ID,5,newEmail));
                     break;
                 case 6:
                     Date date;
@@ -161,12 +173,12 @@ int main(){
                     scanf("%d",&date.month);
                     printf("Enter Person birth year:");
                     scanf("%d",&date.year);
-                    changePersonList(head,ID,6,date);
+                    printf("%d",changePersonList(head,ID,6,date));
                     break;
                 default:
                     break;
                 }
-                printf("\nPerson with id=%d changed!!!\n",ID);
+                //printf("\nPerson with id=%d changed!!!\n",ID);
             }
             break;
         case 3:
