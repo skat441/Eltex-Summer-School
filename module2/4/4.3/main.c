@@ -3,6 +3,19 @@
 
 int main(){
     int id=1;
+
+    srand(time(NULL));
+    CU_initialize_registry();
+    CU_pSuite suite = CU_add_suite("ListTestSuite", 0, 0);
+
+    CU_add_test(suite, "test of add()", test_add_contact);
+    CU_add_test(suite, "test of chg()", test_chg_contact);
+    CU_add_test(suite, "test of del()", test_del_contact);
+    CU_add_test(suite, "test of rand add and del()", test_add_n_del);
+
+    CU_basic_run_tests();
+    CU_cleanup_registry();
+
     Tree* tree=createTree();
     // Person* newPerson1 = PersonInit(0,"Ford","Harrison",0);
     // Person* newPerson2 = PersonInit(1,"Gleg","Harrison",0);
@@ -12,10 +25,10 @@ int main(){
     // Person* newPerson6 = PersonInit(5,"Josh","Harrison",0);
     // Person* newPerson7 = PersonInit(6,"Willy","Harrison",0);
     // Person* newPerson8 = PersonInit(7,"Billy","Harrison",0);
-    for(int i=0;i<15;i++){
-         Person* newPers = PersonInit(i,"Alex","Harrison",0);
-         insertPerson(tree,newPers);
-    }
+    // for(int i=0;i<15;i++){
+    //      Person* newPers = PersonInit(i,"Alex","Harrison",0);
+    //      insertPerson(tree,newPers);
+    // }
     // insertPerson(tree,newPerson1);
     // insertPerson(tree,newPerson2);
     // insertPerson(tree,newPerson3);
@@ -33,8 +46,8 @@ int main(){
     // deletePerson(tree,3);
     // printTreeIDs(tree);
     // insertPerson(tree,newPerson8);
-    printTreeIDs(tree);
-    printf("\n\n%d %d",tree->leftHeight, tree->rightHeight);
+    // printTreeIDs(tree);
+    // printf("\n\n%d %d",tree->leftHeight, tree->rightHeight);
     int ID;
     id=15;
     char answer=0;

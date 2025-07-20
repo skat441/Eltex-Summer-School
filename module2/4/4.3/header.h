@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
+#include <CUnit/CUnit.h>
 typedef struct Date
 {
     char day;
@@ -117,6 +118,16 @@ void recursiveInsert(Node* node, Person* newP){
     }
 }
 
+Node* getNodeWithId(Node* node,int id){
+    if(node==NULL)return NULL;
+    Node* leftNode=getNodeWithId(node->left,id);
+    Node* rightNode=getNodeWithId(node->right,id);
+    if(id==node->p->id)return node;
+    if(leftNode!=NULL)return leftNode;
+    if(rightNode!=NULL)return rightNode;
+    else{return NULL;}
+}
+
 
 int calculateHeight(Node* node) {
     if (node == NULL) {
@@ -188,6 +199,7 @@ Node* rebalanceTree(Node* node){
 
 int insertPerson(Tree* tree, Person* newP){
     //printf("\n\nInsert person with id:%d\n", newP->id);
+    if(getNodeWithId(tree->root,newP->id)!=NULL)return 0;
     if(tree->root==NULL){
         Node* newNode=createNewNode(newP);
         newNode->height=0;
@@ -246,15 +258,6 @@ void printTreeIDs(Tree* tree) {
     postOrderTraversal(tree->root);
 }
 
-Node* getNodeWithId(Node* node,int id){
-    if(node==NULL)return NULL;
-    Node* leftNode=getNodeWithId(node->left,id);
-    Node* rightNode=getNodeWithId(node->right,id);
-    if(id==node->p->id)return node;
-    if(leftNode!=NULL)return leftNode;
-    if(rightNode!=NULL)return rightNode;
-    else{return NULL;}
-}
 
 Node* getParent(Node* node,int id){
     if(node==NULL || (node->right==NULL && node->left==NULL))return NULL;
@@ -270,10 +273,12 @@ Node* getParent(Node* node,int id){
 int deletePerson(Tree* tree, int id){
     //printf("\n\nDelete person with id:%d\n",id);
     int isDeleted=0;
-    if(tree->root==NULL){
+    printf("check root and existence\n");
+    if(tree->root==NULL || getNodeWithId(tree->root,id)==NULL){
         return 0;
     }
     else if(tree->root->right==NULL && tree->root->left==NULL && id==tree->root->p->id){//delete root 0 child
+        printf("delete root 0 child\n");
         free(tree->root);
         tree->root=NULL;
         tree->leftHeight=0;
@@ -281,6 +286,7 @@ int deletePerson(Tree* tree, int id){
         return 1;
     }
     else if(getNodeWithId(tree->root, id)==tree->root){//delete root with change
+        printf("delete root with change\n");
         if(tree->root->right!=NULL){//2 child
             Node* tmpRoot = tree->root;
             tree->root=tree->root->right;
@@ -297,6 +303,7 @@ int deletePerson(Tree* tree, int id){
         tree->root->height=0;
     }
     else{
+        printf("else\n");
         Node* delNode=getNodeWithId(tree->root, id);
         if(delNode==NULL)return 0;
         printf("get delNode:%p id:%d",delNode,delNode->p->id);
@@ -407,4 +414,129 @@ int changePersonList(Node* head, int ID, char fieldToChange, ...){
         return 0;
         break;
     }
+}
+
+//Testing part
+char *rndstr(size_t length) {
+
+    static char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,.-#'?!";        
+    char *randomString = NULL;
+
+    if (length) {
+        randomString = malloc(sizeof(char) * (length +1));
+
+        if (randomString) {            
+            for (int n = 0;n < length;n++) {            
+                int key = rand() % (int)(sizeof(charset) -1);
+                randomString[n] = charset[key];
+            }
+
+            randomString[length] = '\0';
+        }
+    }
+
+    return randomString;
+}
+
+void test_add_contact(void){
+    Tree* tree=createTree();
+    printf("Test adding to phonebook:\n");
+    for(int i=1;i<200;i++){
+        Person* newP = PersonInit(i,rndstr(10),rndstr(10),0);
+        CU_ASSERT(insertPerson(tree,newP)==1);printf("added id %d\n",i);
+    }
+    printTreeIDs(tree);
+}
+void test_chg_contact(void){
+    Tree* tree=createTree();
+    printf("Test adding to phonebook:\n");
+    for(int i=1;i<200;i++){
+        Person* newP = PersonInit(i,rndstr(10),rndstr(10),0);
+        CU_ASSERT(insertPerson(tree,newP)==1);printf("added id %d\n",i);
+    }
+    printTreeIDs(tree);
+    int id_to_change=0;
+    int change_option=0;
+    for(int i=0;i<600;i++){
+        id_to_change=rand()%199+1;
+        change_option=rand()%6+1;
+        switch (change_option)
+        {
+        case 1:
+            CU_ASSERT(changePersonList(tree->root,id_to_change,change_option,rndstr(10))==1);
+            break;
+        case 2:
+            CU_ASSERT(changePersonList(tree->root,id_to_change,change_option,rndstr(10))==1);
+            break;
+        case 3:
+            CU_ASSERT(changePersonList(tree->root,id_to_change,change_option,rand()%2)==1);
+            break;
+        case 4:
+            CU_ASSERT(changePersonList(tree->root,id_to_change,change_option,rand())==1);
+            break;
+        case 5:
+            CU_ASSERT(changePersonList(tree->root,id_to_change,change_option,rndstr(20))==1);
+            break;
+        case 6:
+            Date newDate;
+            newDate.day=rand()%30+1;
+            newDate.month=rand()%12+1;
+            newDate.year=rand()%40+1980;
+            CU_ASSERT(changePersonList(tree->root,id_to_change,change_option,newDate)==1);
+            break;
+        default:
+            break;
+        }
+    }
+    printTreeIDs(tree);
+}
+void test_del_contact(void){
+    printf("Test delete operation to phonebook:\n");
+    Tree* tree=createTree();
+    printf("Test adding to phonebook:\n");
+    for(int i=1;i<200;i++){
+        Person* newP = PersonInit(i,rndstr(10),rndstr(10),0);
+        CU_ASSERT(insertPerson(tree,newP)==1);printf("added id %d\n",i);
+    }
+    printTreeIDs(tree);
+    int id_to_del=rand()%10;
+    for(int i=0;i<300;i++){
+        id_to_del=rand()%200+1;
+        printf("id to del is:%d\n",id_to_del);
+        if(getNodeWithId(tree->root,id_to_del)){//if id contains in phonebook, delete operation will send 1
+            printf("\tdelete id:%d\n",id_to_del);
+            CU_ASSERT(deletePerson(tree,id_to_del)==1);
+        }
+        else{
+            CU_ASSERT(deletePerson(tree,id_to_del)==0);
+        }
+    }
+}
+void test_add_n_del(void){
+    Tree* tree=createTree();
+    for(int i=1;i<2000;i++){
+        if(rand()%2==0){//try to add
+            int id_to_add=rand()%1000;
+            if(getNodeWithId(tree->root,id_to_add)==NULL){//added contact isn't exist
+                Person* newP = PersonInit(id_to_add,rndstr(10),rndstr(10),0);
+                CU_ASSERT(insertPerson(tree,newP)==1);printf("added id %d\n",i);
+            }
+            else{//try to add already exist id
+                Person* newP = PersonInit(id_to_add,rndstr(10),rndstr(10),0);
+                CU_ASSERT(insertPerson(tree,newP)==0);printf("failed to add id %d\n",i);
+            }
+        }
+        else{//try to del
+            int id_to_del=rand()%1000;
+            if(getNodeWithId(tree->root,id_to_del)!=NULL){//if id contains in phonebook, delete operation will send 1
+                printf("\tdelete id:%d\n",id_to_del);
+                CU_ASSERT(deletePerson(tree,id_to_del)==1);
+            }
+            else{
+                printf("\tfailed to delete id:%d\n",id_to_del);
+                CU_ASSERT(deletePerson(tree,id_to_del)==0);
+            }
+        }
+    }
+    //test_phoneBook=clearList(test_phoneBook);
 }

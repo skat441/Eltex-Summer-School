@@ -106,7 +106,7 @@ Node* getINodeById(Node* head, int id){
 
 
 int insertPerson(Node** head, Person* newP){
-    if(newP==NULL)return 0;
+    if(newP==NULL || isContainList(*head,newP->id))return 0;
     if((*head)==NULL){//empty list
         Node* newEl=malloc(sizeof(Node));
         newEl->p=newP;
@@ -471,6 +471,33 @@ void test_del_contact(void){
         }
         else{
             CU_ASSERT(deletePerson(&test_phoneBook,id_to_del)==0);
+        }
+    }
+    test_phoneBook=clearList(test_phoneBook);
+}
+void test_add_n_del(void){
+    for(int i=1;i<2000;i++){
+        if(rand()%2==0){//try to add
+            int id_to_add=rand()%1000;
+            if(isContainList(test_phoneBook,id_to_add)==0){//added contact isn't exist
+                Person* newP = PersonInit(id_to_add,rndstr(10),rndstr(10),0);
+                CU_ASSERT(insertPerson(&test_phoneBook,newP)==1);printf("added id %d\n",i);
+            }
+            else{//try to add already exist id
+                Person* newP = PersonInit(id_to_add,rndstr(10),rndstr(10),0);
+                CU_ASSERT(insertPerson(&test_phoneBook,newP)==0);printf("failed to add id %d\n",i);
+            }
+        }
+        else{//try to del
+            int id_to_del=rand()%1000;
+            if(isContainList(test_phoneBook,id_to_del)){//if id contains in phonebook, delete operation will send 1
+                printf("\tdelete id:%d\n",id_to_del);
+                CU_ASSERT(deletePerson(&test_phoneBook,id_to_del)==1);
+            }
+            else{
+                printf("\tfailed to delete id:%d\n",id_to_del);
+                CU_ASSERT(deletePerson(&test_phoneBook,id_to_del)==0);
+            }
         }
     }
     test_phoneBook=clearList(test_phoneBook);

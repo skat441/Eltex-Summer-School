@@ -27,6 +27,7 @@ int main(){
     CU_add_test(suite, "test of add()", test_add_contact);
     CU_add_test(suite, "test of chg()", test_chg_contact);
     CU_add_test(suite, "test of del()", test_del_contact);
+    CU_add_test(suite, "test of rand add and del()", test_add_n_del);
 
     CU_basic_run_tests();
     CU_cleanup_registry();
