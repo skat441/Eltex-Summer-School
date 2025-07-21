@@ -416,6 +416,14 @@ int changePersonList(Node* head, int ID, char fieldToChange, ...){
     }
 }
 
+void clearTree(Node* node){
+    if(node==NULL)return;
+    clearTree(node->left);
+    clearTree(node->right);
+    PersonFree(node->p);
+    free(node);
+}
+
 //Testing part
 char *rndstr(size_t length) {
 
@@ -446,6 +454,7 @@ void test_add_contact(void){
         CU_ASSERT(insertPerson(tree,newP)==1);printf("added id %d\n",i);
     }
     printTreeIDs(tree);
+    clearTree(tree->root);
 }
 void test_chg_contact(void){
     Tree* tree=createTree();
@@ -489,6 +498,7 @@ void test_chg_contact(void){
         }
     }
     printTreeIDs(tree);
+    clearTree(tree->root);
 }
 void test_del_contact(void){
     printf("Test delete operation to phonebook:\n");
@@ -511,6 +521,7 @@ void test_del_contact(void){
             CU_ASSERT(deletePerson(tree,id_to_del)==0);
         }
     }
+    clearTree(tree->root);
 }
 void test_add_n_del(void){
     Tree* tree=createTree();
@@ -538,5 +549,6 @@ void test_add_n_del(void){
             }
         }
     }
+    clearTree(tree->root);
     //test_phoneBook=clearList(test_phoneBook);
 }

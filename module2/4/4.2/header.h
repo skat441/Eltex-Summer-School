@@ -35,56 +35,9 @@ void addValue(List* list, int val){
         Node* newNode=createNode(val);
         newNode->nextP=list->head;
         list->head=newNode;
-    }
-    // else if(list->head==list->last){//one element in list
-    //     Node* newNode=createNode(val);
-    //     if(list->head->priority<newNode->priority){//priorty less 
-    //         list->head->nextP=newNode;
-    //         list->last=newNode;
-    //     }
-    //     else{
-    //         list->head=newNode;
-    //         newNode->nextP=list->last;
-    //     }
-    // }
-    // else{
-    //     Node* newNode=createNode(val);
-    //     Node* iNode=list->head;
-    //     Node* tmpNode=NULL;
-    //     for(;iNode!=NULL && iNode->priority < newNode->priority;){tmpNode=iNode;iNode=iNode->nextP;}
-    //     if(iNode==NULL){//new el is last
-    //         list->last->nextP=newNode;
-    //         list->last=newNode;
-    //     }
-    //     else if(iNode==list->head){//new element is first
-    //         newNode->nextP=list->head;
-    //         list->head=newNode;
-    //     }
-    //     else{//new el is between two el
-    //         tmpNode->nextP=newNode;
-    //         newNode->nextP=iNode;
-    //     }
-    // }
+    } 
 }
 
-unsigned int getFirstValue(List* list){
-    if(list->head==NULL)return -1;
-    else if(list->head->nextP==NULL){//one element in list
-        unsigned int val=list->head->value;
-        free(list->head);
-        list->head=NULL;
-        list->last=NULL;
-        return val;
-    }
-    else{//more then one element in list
-        unsigned int val=list->head->value;
-        Node* tmpNode=list->head->nextP;
-        free(list->head);
-        list->head=tmpNode;
-        if(list->head->nextP==NULL)list->last=list->head;//if only one element remain after release
-        return val;
-    }
-}
 
 void deleteValueFromQueue(List* list,unsigned int val,int priority){
     Node* iNode=list->head;
@@ -111,6 +64,29 @@ void deleteValueFromQueue(List* list,unsigned int val,int priority){
         for(;jNode!=NULL && jNode->nextP!=iNode;jNode=jNode->nextP);
         jNode->nextP=iNode->nextP;
         free(iNode);
+    }
+}
+
+unsigned int getFirstValue(List* list){
+    if(list->head==NULL)return -1;
+    else if(list->head->nextP==NULL){//one element in list
+        unsigned int val=list->head->value;
+        free(list->head);
+        list->head=NULL;
+        list->last=NULL;
+        return val;
+    }
+    else{//more then one element in list
+        
+        Node* nodeToDelete=list->head;
+        for(Node* iNode=list->head;iNode!=NULL;iNode=iNode->nextP){
+            if(iNode->priority<nodeToDelete->priority){
+                nodeToDelete=iNode;
+            }
+        }
+        unsigned int val=nodeToDelete->value;
+        deleteValueFromQueue(list, nodeToDelete->value,nodeToDelete->priority);
+        return val;
     }
 }
 
