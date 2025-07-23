@@ -163,46 +163,56 @@ void recalcHeight(Node* node, int height){
 }
 
 Node* rebalanceTree(Node* node){
-    if(node==NULL)return node;
+    if(node==NULL || (node->right==NULL && node->left==NULL))return node;
     node->left=rebalanceTree(node->left);
     node->right=rebalanceTree(node->right);
     int max_balance=calculateMaxHeight(node->left)-calculateMaxHeight(node->right);
-    int min_l_balance=calculateMinHeight(node->left)-calculateMaxHeight(node->right);
-    int min_r_balance=calculateMaxHeight(node->left)-calculateMinHeight(node->right);
-    if(max_balance>1 || min_l_balance>1 || min_r_balance>1){
-        if(node->left->right==NULL){
-            printf("RR\n");
-            Node* tmp=node;
-            node=node->left;
-            node->right=tmp;
-            tmp->left=NULL;
-        }
-        else{
+    // int min_l_balance=calculateMinHeight(node->left)-calculateMaxHeight(node->right);
+    // int min_r_balance=calculateMaxHeight(node->left)-calculateMinHeight(node->right);
+    // printf("__________________\n");
+    // show(node,0);
+    if(max_balance>1){
+        
+        if( calculateMaxHeight(node->left->left)<calculateMaxHeight(node->left->right)){
             printf("LR\n");
             Node* tmp=node;
-            Node* tmpLeft=node->left;
-            node=node->left->right;
-            node->left=tmpLeft;
-            tmp->left=NULL;
-            tmpLeft->right=NULL;
-            node->right=tmp;
+            Node* tmpbottom=tmp->left->right;
+            Node* tmpmid=tmp->left;
+            tmp->left=tmpbottom->right;
+            tmpmid->right=tmpbottom->left;
+            tmpbottom->left=tmpmid;
+            tmpbottom->right=tmp;
+            node=tmpbottom;
+        }
+        else if(calculateMaxHeight(node->left->left)>=calculateMaxHeight(node->left->right)){
+            printf("RR\n");
+            Node* tmp=node;
+            Node* tmpmid=node->left;
+            tmp->left=tmpmid->right;
+            tmpmid->right=tmp;
+            node=tmpmid;
         }
     }
-    else if(max_balance<-1 || min_l_balance<-1 || min_r_balance<-1){
-        if(node->right->left==NULL){
-            printf("LL\n");
-            Node* tmp=node;
-            node=node->right;
-            node->left=tmp;
-            tmp->right=NULL;
-        }
-        else{
+    else if(max_balance<-1){
+
+         if(calculateMaxHeight(node->right->left)>calculateMaxHeight(node->right->right)){
             printf("RL\n");
             Node* tmp=node;
-            Node* tmpLeft=node->right->left;
-            node=node->right;
-            node->left=tmp;
-            tmp->right=tmpLeft;
+            Node* tmpbottom=tmp->right->left;
+            Node* tmpmid=tmp->right;
+            tmp->right=tmpbottom->left;
+            tmpmid->left=tmpbottom->right;
+            tmpbottom->left=tmp;
+            tmpbottom->right=tmpmid;
+            node=tmpbottom;
+        }
+        else if(calculateMaxHeight(node->right->left)<=calculateMaxHeight(node->right->right)){
+            printf("LL\n");
+            Node* tmp=node;
+            Node* tmpmid=node->right;
+            tmp->right=tmpmid->left;
+            tmpmid->left=tmp;
+            node=tmpmid;
         }
     }
     return node;
