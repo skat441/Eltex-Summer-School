@@ -25,10 +25,13 @@ int main(){
     // Person* newPerson6 = PersonInit(5,"Josh","Harrison",0);
     // Person* newPerson7 = PersonInit(6,"Willy","Harrison",0);
     // Person* newPerson8 = PersonInit(7,"Billy","Harrison",0);
-    // for(int i=0;i<15;i++){
-    //      Person* newPers = PersonInit(i,"Alex","Harrison",0);
-    //      insertPerson(tree,newPers);
-    // }
+    for(int i=0;i<15;i++){
+        Person* newPers = PersonInit(rand()%100,"Alex","Harrison",0);
+        insertPerson(tree,newPers);
+        printf("___________________\n");
+        Show(tree);
+        printf("%d\n",checkBalance(tree->root));
+    }
     // insertPerson(tree,newPerson1);
     // insertPerson(tree,newPerson2);
     // insertPerson(tree,newPerson3);
@@ -189,6 +192,8 @@ int main(){
         case 3:
             //
             printTreeIDs(tree);
+            Show(tree);
+            printf("%d\n",checkBalance(tree->root));
             //
             break;
         default:

@@ -129,18 +129,27 @@ Node* getNodeWithId(Node* node,int id){
 }
 
 
-int calculateHeight(Node* node) {
+int calculateMaxHeight(Node* node) {
     if (node == NULL) {
         return 0;
     }
-    int leftHeight = calculateHeight(node->left);
-    int rightHeight = calculateHeight(node->right);
+    int leftHeight = calculateMaxHeight(node->left);
+    int rightHeight = calculateMaxHeight(node->right);
     return (leftHeight > rightHeight ? leftHeight : rightHeight) + 1;
+}
+
+int calculateMinHeight(Node* node) {
+    if (node == NULL) {
+        return 0;
+    }
+    int leftHeight = calculateMinHeight(node->left);
+    int rightHeight = calculateMinHeight(node->right);
+    return (leftHeight < rightHeight ? leftHeight : rightHeight) + 1;
 }
 
 int checkBalance(Node* node){
     if (node==NULL)return 1;
-    if(abs(calculateHeight(node->left)-calculateHeight(node->right))>1)return 0;
+    if(abs(calculateMaxHeight(node->left)-calculateMinHeight(node->right))>1 || abs(calculateMinHeight(node->left)-calculateMaxHeight(node->right))>1)return 0;
     int leftBalance=checkBalance(node->left);
     int rightBalance=checkBalance(node->right);
     if(leftBalance==0 || rightBalance==0)return 0;
@@ -157,8 +166,10 @@ Node* rebalanceTree(Node* node){
     if(node==NULL)return node;
     node->left=rebalanceTree(node->left);
     node->right=rebalanceTree(node->right);
-    int balance=calculateHeight(node->left)-calculateHeight(node->right);
-    if(balance>1){
+    int max_balance=calculateMaxHeight(node->left)-calculateMaxHeight(node->right);
+    int min_l_balance=calculateMinHeight(node->left)-calculateMaxHeight(node->right);
+    int min_r_balance=calculateMaxHeight(node->left)-calculateMinHeight(node->right);
+    if(max_balance>1 || min_l_balance>1 || min_r_balance>1){
         if(node->left->right==NULL){
             printf("RR\n");
             Node* tmp=node;
@@ -177,7 +188,7 @@ Node* rebalanceTree(Node* node){
             node->right=tmp;
         }
     }
-    else if(balance<-1){
+    else if(max_balance<-1 || min_l_balance<-1 || min_r_balance<-1){
         if(node->right->left==NULL){
             printf("LL\n");
             Node* tmp=node;
@@ -207,8 +218,8 @@ int insertPerson(Tree* tree, Person* newP){
         return 1;
     }
     recursiveInsert(tree->root,newP);
-    tree->leftHeight = calculateHeight(tree->root->left);
-    tree->rightHeight = calculateHeight(tree->root->right);
+    tree->leftHeight = calculateMaxHeight(tree->root->left);
+    tree->rightHeight = calculateMaxHeight(tree->root->right);
     if(!checkBalance(tree->root))tree->root=rebalanceTree(tree->root);
     recalcHeight(tree->root,0);
     return 1;
@@ -258,6 +269,17 @@ void printTreeIDs(Tree* tree) {
     postOrderTraversal(tree->root);
 }
 
+void show(Node* node, int level){
+    if (node == NULL)return;
+    show(node->right, level + 1);
+        for (int i = 0; i < level * 3; i++)printf(" ");
+        printf("%d\n", node->p->id);
+        show(node->left, level + 1);
+}
+
+void Show(Tree* tree){
+    show(tree->root,0);
+}
 
 Node* getParent(Node* node,int id){
     if(node==NULL || (node->right==NULL && node->left==NULL))return NULL;
@@ -352,8 +374,8 @@ int deletePerson(Tree* tree, int id){
             }
         }
     }
-    tree->leftHeight = calculateHeight(tree->root->left);
-    tree->rightHeight = calculateHeight(tree->root->right);
+    tree->leftHeight = calculateMaxHeight(tree->root->left);
+    tree->rightHeight = calculateMaxHeight(tree->root->right);
     if(!checkBalance(tree->root))tree->root=rebalanceTree(tree->root);
     recalcHeight(tree->root,0);
     return isDeleted;
@@ -549,6 +571,7 @@ void test_add_n_del(void){
             }
         }
     }
+    Show(tree);
     clearTree(tree->root);
     //test_phoneBook=clearList(test_phoneBook);
 }
