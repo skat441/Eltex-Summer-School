@@ -33,8 +33,22 @@ void addValue(List* list, int val){
     }
     else{
         Node* newNode=createNode(val);
-        newNode->nextP=list->head;
-        list->head=newNode;
+        Node* iNode=list->head;
+        Node* tmpNode=NULL;
+        for(;iNode!=NULL && iNode->priority<newNode->priority ;tmpNode=iNode,iNode=iNode->nextP);
+        if(tmpNode==NULL){//new Node is first
+            newNode->nextP=list->head;
+            list->head=newNode;
+            return;
+        }
+        if(iNode==NULL){//New node is last
+            tmpNode->nextP=newNode;
+            list->last=newNode;
+            return;
+        }
+        tmpNode->nextP=newNode;
+        newNode->nextP=iNode;
+        return;
     } 
 }
 

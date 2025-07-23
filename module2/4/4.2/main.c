@@ -9,6 +9,6 @@ int main(){
     printf("\n\n%d\n",getFirstValue(queue));
     printf("%d\n",getValueWithPriority(queue,26));
     printf("%d\n\n",getValueWithMorePriority(queue,15));
-    viewList(queue);
+    //viewList(queue);
     return 0;
 }
