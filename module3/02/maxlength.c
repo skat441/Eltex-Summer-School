@@ -10,6 +10,6 @@ int main(int argc, char *argv[])
         //printf("%s ",argv[i]);
         if(strlen(argv[i])>strlen(argv[maxIndex]))maxIndex=i;
     }
-    printf("Maxlength is:%s",argv[maxIndex]);
+    printf("Maxlength is:%s\n",argv[maxIndex]);
     return 0;
 }

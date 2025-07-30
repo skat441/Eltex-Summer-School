@@ -138,18 +138,18 @@ int calculateMaxHeight(Node* node) {
     return (leftHeight > rightHeight ? leftHeight : rightHeight) + 1;
 }
 
-int calculateMinHeight(Node* node) {
-    if (node == NULL) {
-        return 0;
-    }
-    int leftHeight = calculateMinHeight(node->left);
-    int rightHeight = calculateMinHeight(node->right);
-    return (leftHeight < rightHeight ? leftHeight : rightHeight) + 1;
-}
+// int calculateMinHeight(Node* node) {
+//     if (node == NULL) {
+//         return 0;
+//     }
+//     int leftHeight = calculateMinHeight(node->left);
+//     int rightHeight = calculateMinHeight(node->right);
+//     return (leftHeight < rightHeight ? leftHeight : rightHeight) + 1;
+// }
 
 int checkBalance(Node* node){
     if (node==NULL)return 1;
-    if(abs(calculateMaxHeight(node->left)-calculateMinHeight(node->right))>1 || abs(calculateMinHeight(node->left)-calculateMaxHeight(node->right))>1)return 0;
+    if(abs(calculateMaxHeight(node->left)-calculateMaxHeight(node->right))>1)return 0;
     int leftBalance=checkBalance(node->left);
     int rightBalance=checkBalance(node->right);
     if(leftBalance==0 || rightBalance==0)return 0;
