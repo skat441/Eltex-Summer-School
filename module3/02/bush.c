@@ -54,6 +54,10 @@ int main(){
         fgets(buff,SIZE,stdin);
         buff[SIZE]=0;
         for(int i=0;i<strlen(buff);i++)if(buff[i]=='\n')buff[i]=0;//delete all \n
+        
+        sscanf(buff,"%s",buff2);
+        if(strcmp(buff2,"exit")==0)break;
+        
         if(buff[0]!=0){
             char** argv=getArgv(buff);//get str with args for execvp
 
@@ -63,7 +67,8 @@ int main(){
                 exit(EXIT_FAILURE);
             }
             else if(p == 0){//child with
-                execvp(argv[0],argv);
+                if(execvp(argv[0],argv)==-1)printf("Wrong command\n");
+                
                 exit(EXIT_SUCCESS);
             }
             else{//Parent
@@ -72,7 +77,6 @@ int main(){
                 free(argv);
             }
         }
-        sscanf(buff,"%s",buff2);
-    }while(strcmp(buff2,"exit")!=0);
+    }while(1);
     return 0;
 }

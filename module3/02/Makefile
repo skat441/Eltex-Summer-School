@@ -17,4 +17,3 @@ maxlength: maxlength.c
 
 clean:
 	rm -rf *.o bush max sum strcat maxlength
-	
