@@ -4,4 +4,4 @@ main.exe: main.c
 	gcc main.c -o main.exe
 
 clean:
-	rm -rf *.o main.exe
+	rm -rf *.o main.exe *.txt
