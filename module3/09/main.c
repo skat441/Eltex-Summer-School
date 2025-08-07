@@ -13,6 +13,10 @@ int main(int argc, char *argv[]){
     }
     srand(time(NULL));
     sem_t* file_sem=sem_open("read_write",O_CREAT, O_RDWR, 1);
+    if(file_sem==SEM_FAILED){
+        printf("Sem error\n");
+        exit(EXIT_FAILURE);
+    }
     int N=atoi(argv[1]);
     pid_t p = fork();
     if(p<0){
