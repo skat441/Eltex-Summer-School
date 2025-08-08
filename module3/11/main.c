@@ -20,6 +20,7 @@ int main(int argc, char *argv[]){
     }
     signal(SIGINT, listener);
     srand(time(NULL)+getpid());
+    int data_count=0;
     //Semaphors
     sem_unlink("max_min");
     sem_t* shm_max_min_sem=sem_open("max_min",O_CREAT, O_RDWR, 1);
@@ -83,6 +84,7 @@ int main(int argc, char *argv[]){
             if(i!=0)printf("[MAX_MIN] max:%d min:%d\n",shm_max_min[0],shm_max_min[1]);
             int max_count=rand()%10+1;
             for(int j=0;j<max_count;j++){
+                data_count++;
                 num=rand()%256+1;
                 shm_data[j]=num;
             }
@@ -103,6 +105,7 @@ int main(int argc, char *argv[]){
     munmap(shm_max_min, sizeof(int) * 2);
     close(shm_mm);
     shm_unlink("max_min_shm");
+    printf("data count:%d\n",data_count);
     // shmdt(shm_max_min);
     // shmctl(shm_mm, IPC_RMID, NULL);
     return 0;

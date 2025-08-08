@@ -10,40 +10,8 @@
 #include <netinet/in.h>
 #include <netinet/ip.h>
 #include <arpa/inet.h>
-#define SIZE 100
-struct msgbuf {
-    long mtype;
-    char mtext[SIZE];
-};
+#define SIZE 256
 
-static void
-send_msg(int client_id, int qid, int msgtype, char buff[SIZE])
-{
-    struct msgbuf  msg;
-    msg.mtype = msgtype;
-    strcpy(msg.mtext,buff);
-    //mark msg source
-    for(int i=SIZE;i>2;i--){//shift msg to add source id
-        msg.mtext[i]=msg.mtext[i-3];
-    }
-    if(client_id<10){
-        msg.mtext[0]='0';
-        msg.mtext[1]=client_id+'0';
-        msg.mtext[2]=' ';
-    }
-    else{
-        msg.mtext[0]=client_id/10+'0';
-        msg.mtext[1]=client_id%10+'0';
-        msg.mtext[2]=' ';
-    }
-    msg.mtext[SIZE]=0;
-    //printf("msg:%s\n",msg.mtext);
-    if (msgsnd(qid, &msg, sizeof(msg.mtext),0) == -1)
-    {
-        perror("msgsnd error");
-        exit(EXIT_FAILURE);
-    }
-}
 
 int
 main(int argc, char *argv[])
@@ -67,7 +35,7 @@ main(int argc, char *argv[])
     int udp_socket = socket(AF_INET, SOCK_DGRAM, 0);
     struct sockaddr_in local_addr;
     local_addr.sin_family = AF_INET;
-    local_addr.sin_port = htons(0);
+    local_addr.sin_port = htons(51001);
     char client_ip[11]={"127.0.0."};
     client_ip[8]=client_id/10+'0';
     client_ip[9]=client_id%10+'0';
@@ -94,7 +62,7 @@ main(int argc, char *argv[])
     //register part
     strcpy(buff,"0 register\0");
     //send_msg(client_id,qid,10,buff);
-    if(sendto(  udp_socket, buff, strlen(buff)+1, 0, (struct sockaddr *) &servaddr, sizeof(servaddr)) < 0){
+    if(sendto(  udp_socket, buff, SIZE, 0, (struct sockaddr *) &servaddr, sizeof(servaddr)) < 0){
         perror(NULL);
         close(udp_socket);
         exit(1);
@@ -134,7 +102,7 @@ main(int argc, char *argv[])
         }
         else{
             if(strcmp(buff,"\n")!=0){
-                if(sendto(  udp_socket, buff, strlen(buff)+1, 0, (struct sockaddr *) &servaddr, sizeof(servaddr)) < 0){
+                if(sendto(  udp_socket, buff, SIZE, 0, (struct sockaddr *) &servaddr, sizeof(servaddr)) < 0){
                     perror(NULL);
                     close(udp_socket);
                     exit(1);
@@ -143,15 +111,11 @@ main(int argc, char *argv[])
             //if(strcmp(buff,"\n")!=0)send_msg(client_id,qid,10,buff);
             //send_msg(qid,1,buff);
         }
-        struct msgbuf msg;
 
-        // if(msgrcv(qid, &msg, sizeof(msg.mtext), 2,0)==-1){
-        //     perror("msgrecv");
-        //     exit(EXIT_FAILURE);
-        // }
-        // while(msgrcv(qid, &msg, sizeof(msg.mtext), client_id,IPC_NOWAIT) != -1){//check input for new messages
-        //     printf("get new message:%s\n",msg.mtext);
-        // }
+        while(recvfrom(udp_socket,&buff,SIZE,MSG_DONTWAIT,(struct sockaddr *) &source_addr,&len)>0){
+            printf("message:%s", buff);
+        }
     }while(1);
+    close(udp_socket);
     exit(EXIT_SUCCESS);
 }

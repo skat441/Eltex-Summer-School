@@ -11,9 +11,6 @@
 
 static int shutdown_server=0;
 
-void listener(int sig) {
-    if(sig==2 || sig==3)shutdown_server=1;
-}
 struct msgbuf {
     long mtype;
     char mtext[SIZE];
@@ -81,7 +78,7 @@ main(int argc, char *argv[])
             //break;
         }
         else{
-            printf("send new message to:%d\n",dest_prio);
+            if(clients[dest_prio]==1)printf("send new message to:%d\n",dest_prio);
             if(clients[dest_prio]==1)send_msg(qid,dest_prio,msg.mtext);//redirect msg if client exists
         }
         if(shutdown_server){

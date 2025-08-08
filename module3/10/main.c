@@ -16,6 +16,7 @@ void listener(int sig) {
 }
 
 int main(int argc, char *argv[]){
+    int data_count=0;
     if(argc!= 1){
         printf("Usage: ./main.exe\n");
         exit(EXIT_FAILURE);
@@ -75,7 +76,7 @@ int main(int argc, char *argv[]){
             sem_wait(shm_max_min_sem);
             int j=0;
             do{
-                printf("%d\n",j);
+                //printf("%d\n",j);
                 num=shm_data[j];
                 if(num>max_num)max_num=num;
                 if(num<min_num && num!=0)min_num=num;
@@ -102,6 +103,7 @@ int main(int argc, char *argv[]){
             if(i!=0)printf("[MAX_MIN] max:%d min:%d\n",shm_max_min[0],shm_max_min[1]);
             int max_count=rand()%10+1;
             for(int j=0;j<max_count;j++){
+                data_count++;
                 num=rand()%256+1;
                 shm_data[j]=num;
             }
@@ -122,6 +124,7 @@ int main(int argc, char *argv[]){
         close(shm_mm);
         shm_unlink("nums");
         shm_unlink("max_min_shm");
+        printf("data count:%d\n",data_count);
     }
     return 0;
 }
