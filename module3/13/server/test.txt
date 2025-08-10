@@ -1,0 +1,51 @@
+ Opening a file or directory with the O_PATH flag requires
+              no permissions on the object itself (but does require
+              execute permission on the directories in the path prefix).
+              Depending on the subsequent operation, a check for suitable
+              file permissions may be performed (e.g., fchdir(2) requires
+              execute permission on the directory referred to by its file
+              descriptor argument).  By contrast, obtaining a reference
+              to a filesystem object by opening it with the O_RDONLY flag
+              requires that the caller have read permission on the
+              object, even when the subsequent operation (e.g.,
+              fchdir(2), fstat(2)) does not require read permission on
+              the object.
+
+              If pathname is a symbolic link and the O_NOFOLLOW flag is
+              also specified, then the call returns a file descriptor
+              referring to the symbolic link.  This file descriptor can
+              be used as the dirfd argument in calls to fchownat(2),
+              fstatat(2), linkat(2), and readlinkat(2) with an empty
+              pathname to have the calls operate on the symbolic link.
+
+              If pathname refers to an automount point that has not yet
+              been triggered, so no other filesystem is mounted on it,
+              then the call returns a file descriptor referring to the
+              automount directory without triggering a mount.  fstatfs(2)
+              can then be used to determine if it is, in fact, an
+              untriggered automount point (.f_type ==
+              AUTOFS_SUPER_MAGIC).
+
+              One use of O_PATH for regular files is to provide the
+              equivalent of POSIX.1's O_EXEC functionality.  This permits
+              us to open a file for which we have execute permission but
+              not read permission, and then execute that file, with steps
+              something like the following:
+
+                  char buf[PATH_MAX];
+                  fd = open("some_prog", O_PATH);
+                  snprintf(buf, PATH_MAX, "/proc/self/fd/%d", fd);
+                  execl(buf, "some_prog", (char *) NULL);
+
+              An O_PATH file descriptor can also be passed as the
+              argument of fexecve(3).
+
+       O_SYNC Write operations on the file will complete according to the
+              requirements of synchronized I/O file integrity completion
+              (by contrast with the synchronized I/O data integrity
+              completion provided by O_DSYNC.)
+
+              By the time write(2) (or similar) returns, the output data
+              and associated file metadata have been transferred to the
+              underlying hardware (i.e., as though each write(2) was
+              followed by a call to fsync(2)).  See VERSIONS.

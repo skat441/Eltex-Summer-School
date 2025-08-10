@@ -62,7 +62,7 @@ main(int argc, char *argv[])
     //register part
     strcpy(buff,"0 register\0");
     //send_msg(client_id,qid,10,buff);
-    if(sendto(  udp_socket, buff, SIZE, 0, (struct sockaddr *) &servaddr, sizeof(servaddr)) < 0){
+    if(sendto(  udp_socket, buff, sizeof("0 register\0"), 0, (struct sockaddr *) &servaddr, sizeof(servaddr)) < 0){
         perror(NULL);
         close(udp_socket);
         exit(1);
