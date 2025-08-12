@@ -1,0 +1,45 @@
+switch:
+on PC1:
+ip 192.168.0.2 255.255.255.0
+
+on PC2:
+ip 192.168.0.3 255.255.255.0
+ping 192.168.0.2 255.255.255.0
+
+router:
+
+PC1:
+PC1> ip 192.168.0.2 255.255.255.0 192.168.0.1
+Checking for duplicate address...
+PC1 : 192.168.0.2 255.255.255.0 gateway 192.168.0.1
+
+PC:2
+PC2> ip 192.168.1.2 255.255.255.0 192.168.1.1
+Checking for duplicate address...
+PC2 : 192.168.1.2 255.255.255.0 gateway 192.168.1.1
+
+Router:
+R1#configure terminal
+R1(config)#interface Ethernet1/0
+R1(config-if)#ip address 192.168.0.1 255.255.255.0
+R1(config-if)#no shutdown
+R1(config-if)#
+*Mar  1 00:04:48.801: %LINK-3-UPDOWN: Interface Ethernet1/0, changed state to up
+*Mar  1 00:04:49.803: %LINEPROTO-5-UPDOWN: Line protocol on Interface Ethernet1/0, changed state to up
+R1(config-if)#interface Ethernet1/1
+R1(config-if)#ip address 192.168.1.1 255.255.255.0
+R1(config-if)#no shutdown
+R1(config-if)#
+*Mar  1 00:05:07.812: %LINK-3-UPDOWN: Interface Ethernet1/1, changed state to up
+*Mar  1 00:05:08.814: %LINEPROTO-5-UPDOWN: Line protocol on Interface Ethernet1/1, changed state to up
+R1(config-if)#^Z
+R1#
+*Mar  1 00:05:12.920: %SYS-5-CONFIG_I: Configured from console by console
+
+PC1> ping 192.168.1.2
+192.168.1.2 icmp_seq=1 timeout
+192.168.1.2 icmp_seq=2 timeout
+84 bytes from 192.168.1.2 icmp_seq=3 ttl=63 time=12.780 ms
+84 bytes from 192.168.1.2 icmp_seq=4 ttl=63 time=16.846 ms
+84 bytes from 192.168.1.2 icmp_seq=5 ttl=63 time=17.401 ms
+
