@@ -1,0 +1,140 @@
+На корневом
+vIOS-L2-01>enable  
+vIOS-L2-01#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+vIOS-L2-01(config)#spanning-tree vlan 1 root primary
+
+На остальных:
+sh spanning-tree # показывает информацию по stp
+
+Через Edit config ставим ip в одной подсети у пк 
+
+Пинг всех со всеми
+
+PC1> ping 192.168.1.12
+
+84 bytes from 192.168.1.12 icmp_seq=1 ttl=64 time=0.658 ms
+84 bytes from 192.168.1.12 icmp_seq=2 ttl=64 time=0.624 ms
+84 bytes from 192.168.1.12 icmp_seq=3 ttl=64 time=0.700 ms
+84 bytes from 192.168.1.12 icmp_seq=4 ttl=64 time=0.679 ms
+84 bytes from 192.168.1.12 icmp_seq=5 ttl=64 time=10.546 ms
+
+PC1> ping 192.168.1.13
+
+84 bytes from 192.168.1.13 icmp_seq=1 ttl=64 time=7.651 ms
+84 bytes from 192.168.1.13 icmp_seq=2 ttl=64 time=2.143 ms
+84 bytes from 192.168.1.13 icmp_seq=3 ttl=64 time=1.737 ms
+84 bytes from 192.168.1.13 icmp_seq=4 ttl=64 time=1.677 ms
+84 bytes from 192.168.1.13 icmp_seq=5 ttl=64 time=7.987 ms
+
+PC1> ping 192.168.1.14
+
+84 bytes from 192.168.1.14 icmp_seq=1 ttl=64 time=10.532 ms
+84 bytes from 192.168.1.14 icmp_seq=2 ttl=64 time=7.745 ms
+84 bytes from 192.168.1.14 icmp_seq=3 ttl=64 time=1.573 ms
+84 bytes from 192.168.1.14 icmp_seq=4 ttl=64 time=4.546 ms
+84 bytes from 192.168.1.14 icmp_seq=5 ttl=64 time=7.799 ms
+
+PC1> ping 192.168.1.15
+
+84 bytes from 192.168.1.15 icmp_seq=1 ttl=64 time=12.192 ms
+84 bytes from 192.168.1.15 icmp_seq=2 ttl=64 time=1.393 ms
+84 bytes from 192.168.1.15 icmp_seq=3 ttl=64 time=10.509 ms
+84 bytes from 192.168.1.15 icmp_seq=4 ttl=64 time=7.771 ms
+84 bytes from 192.168.1.15 icmp_seq=5 ttl=64 time=6.305 ms
+
+PC1> ping 192.168.1.16
+
+84 bytes from 192.168.1.16 icmp_seq=1 ttl=64 time=13.528 ms
+84 bytes from 192.168.1.16 icmp_seq=2 ttl=64 time=7.436 ms
+84 bytes from 192.168.1.16 icmp_seq=3 ttl=64 time=6.640 ms
+84 bytes from 192.168.1.16 icmp_seq=4 ttl=64 time=9.457 ms
+84 bytes from 192.168.1.16 icmp_seq=5 ttl=64 time=4.998 ms
+
+PC2> ping 192.168.1.13
+
+84 bytes from 192.168.1.13 icmp_seq=1 ttl=64 time=3.804 ms
+84 bytes from 192.168.1.13 icmp_seq=2 ttl=64 time=11.367 ms
+84 bytes from 192.168.1.13 icmp_seq=3 ttl=64 time=1.576 ms
+84 bytes from 192.168.1.13 icmp_seq=4 ttl=64 time=6.302 ms
+84 bytes from 192.168.1.13 icmp_seq=5 ttl=64 time=6.098 ms
+
+PC2> ping 192.168.1.14
+
+84 bytes from 192.168.1.14 icmp_seq=1 ttl=64 time=8.878 ms
+84 bytes from 192.168.1.14 icmp_seq=2 ttl=64 time=7.013 ms
+84 bytes from 192.168.1.14 icmp_seq=3 ttl=64 time=5.991 ms
+84 bytes from 192.168.1.14 icmp_seq=4 ttl=64 time=8.763 ms
+84 bytes from 192.168.1.14 icmp_seq=5 ttl=64 time=5.718 ms
+
+PC2> ping 192.168.1.15
+
+84 bytes from 192.168.1.15 icmp_seq=1 ttl=64 time=15.208 ms
+84 bytes from 192.168.1.15 icmp_seq=2 ttl=64 time=7.008 ms
+84 bytes from 192.168.1.15 icmp_seq=3 ttl=64 time=12.302 ms
+84 bytes from 192.168.1.15 icmp_seq=4 ttl=64 time=2.723 ms
+84 bytes from 192.168.1.15 icmp_seq=5 ttl=64 time=7.149 ms
+
+PC2> ping 192.168.1.16
+
+84 bytes from 192.168.1.16 icmp_seq=1 ttl=64 time=4.720 ms
+84 bytes from 192.168.1.16 icmp_seq=2 ttl=64 time=7.154 ms
+84 bytes from 192.168.1.16 icmp_seq=3 ttl=64 time=7.763 ms
+84 bytes from 192.168.1.16 icmp_seq=4 ttl=64 time=7.115 ms
+84 bytes from 192.168.1.16 icmp_seq=5 ttl=64 time=12.489 ms
+
+PC3> ping 192.168.1.14
+
+84 bytes from 192.168.1.14 icmp_seq=1 ttl=64 time=3.156 ms
+84 bytes from 192.168.1.14 icmp_seq=2 ttl=64 time=1.677 ms
+84 bytes from 192.168.1.14 icmp_seq=3 ttl=64 time=7.358 ms
+84 bytes from 192.168.1.14 icmp_seq=4 ttl=64 time=0.759 ms
+84 bytes from 192.168.1.14 icmp_seq=5 ttl=64 time=5.535 ms
+
+PC3> ping 192.168.1.15
+
+84 bytes from 192.168.1.15 icmp_seq=1 ttl=64 time=11.006 ms
+84 bytes from 192.168.1.15 icmp_seq=2 ttl=64 time=6.092 ms
+84 bytes from 192.168.1.15 icmp_seq=3 ttl=64 time=5.643 ms
+84 bytes from 192.168.1.15 icmp_seq=4 ttl=64 time=3.563 ms
+84 bytes from 192.168.1.15 icmp_seq=5 ttl=64 time=5.955 ms
+
+PC3> ping 192.168.1.16
+
+84 bytes from 192.168.1.16 icmp_seq=1 ttl=64 time=14.734 ms
+84 bytes from 192.168.1.16 icmp_seq=2 ttl=64 time=3.727 ms
+84 bytes from 192.168.1.16 icmp_seq=3 ttl=64 time=7.133 ms
+84 bytes from 192.168.1.16 icmp_seq=4 ttl=64 time=15.556 ms
+84 bytes from 192.168.1.16 icmp_seq=5 ttl=64 time=2.528 ms
+
+PC4> ping 192.168.1.15
+
+84 bytes from 192.168.1.15 icmp_seq=1 ttl=64 time=6.477 ms
+84 bytes from 192.168.1.15 icmp_seq=2 ttl=64 time=8.828 ms
+84 bytes from 192.168.1.15 icmp_seq=3 ttl=64 time=4.003 ms
+84 bytes from 192.168.1.15 icmp_seq=4 ttl=64 time=3.807 ms
+84 bytes from 192.168.1.15 icmp_seq=5 ttl=64 time=6.676 ms
+
+PC4> ping 192.168.1.16
+
+84 bytes from 192.168.1.16 icmp_seq=1 ttl=64 time=4.008 ms
+84 bytes from 192.168.1.16 icmp_seq=2 ttl=64 time=6.542 ms
+84 bytes from 192.168.1.16 icmp_seq=3 ttl=64 time=6.783 ms
+84 bytes from 192.168.1.16 icmp_seq=4 ttl=64 time=9.151 ms
+84 bytes from 192.168.1.16 icmp_seq=5 ttl=64 time=7.578 ms
+
+PC5> ping 192.168.1.16
+
+84 bytes from 192.168.1.16 icmp_seq=1 ttl=64 time=0.695 ms
+84 bytes from 192.168.1.16 icmp_seq=2 ttl=64 time=0.777 ms
+84 bytes from 192.168.1.16 icmp_seq=3 ttl=64 time=2.584 ms
+84 bytes from 192.168.1.16 icmp_seq=4 ttl=64 time=4.076 ms
+84 bytes from 192.168.1.16 icmp_seq=5 ttl=64 time=3.533 ms
+
+На рут порте не рутового коммутатора
+vIOS-L2-01>enable  
+vIOS-L2-01#config
+Configuring from terminal, memory, or network [terminal]? t
+Enter configuration commands, one per line.  End with CNTL/Z.
+vIOS-L2-01(config)#interface Gi0/0      
+vIOS-L2-01(config-if)#spanning-tree cost 10
