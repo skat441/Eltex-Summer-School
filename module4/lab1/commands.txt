@@ -4,7 +4,14 @@ ip 192.168.0.2 255.255.255.0
 
 on PC2:
 ip 192.168.0.3 255.255.255.0
-ping 192.168.0.2 255.255.255.0
+
+PC1> ping 192.168.0.3
+
+84 bytes from 192.168.0.3 icmp_seq=1 ttl=64 time=0.162 ms
+84 bytes from 192.168.0.3 icmp_seq=2 ttl=64 time=0.293 ms
+84 bytes from 192.168.0.3 icmp_seq=3 ttl=64 time=0.305 ms
+84 bytes from 192.168.0.3 icmp_seq=4 ttl=64 time=0.266 ms
+84 bytes from 192.168.0.3 icmp_seq=5 ttl=64 time=0.257 ms
 
 router:
 
@@ -37,9 +44,11 @@ R1#
 *Mar  1 00:05:12.920: %SYS-5-CONFIG_I: Configured from console by console
 
 PC1> ping 192.168.1.2
-192.168.1.2 icmp_seq=1 timeout
-192.168.1.2 icmp_seq=2 timeout
-84 bytes from 192.168.1.2 icmp_seq=3 ttl=63 time=12.780 ms
-84 bytes from 192.168.1.2 icmp_seq=4 ttl=63 time=16.846 ms
-84 bytes from 192.168.1.2 icmp_seq=5 ttl=63 time=17.401 ms
+
+84 bytes from 192.168.1.2 icmp_seq=1 ttl=63 time=11.696 ms
+84 bytes from 192.168.1.2 icmp_seq=2 ttl=63 time=14.992 ms
+84 bytes from 192.168.1.2 icmp_seq=3 ttl=63 time=15.124 ms
+84 bytes from 192.168.1.2 icmp_seq=4 ttl=63 time=15.853 ms
+84 bytes from 192.168.1.2 icmp_seq=5 ttl=63 time=16.524 ms
+
 
