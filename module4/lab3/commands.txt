@@ -1,0 +1,99 @@
+Для коммутаторов доступа:
+
+Switch>enable
+Switch#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#interface GigabitEthernet1/0
+Switch(config-if)#switchport access vlan 20
+Switch(config-if)#interface GigabitEthernet1/1
+Switch(config-if)#switchport access vlan 333
+Switch#sh vlan brief
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active
+20   VLAN20                           active    Gi1/0
+100  VLAN100                          active
+200  VLAN0200                         active
+300  VLAN0300                         active
+333  VLAN333                          active    Gi1/1
+1002 fddi-default                     act/unsup
+1003 trcrf-default                    act/unsup
+1004 fddinet-default                  act/unsup
+1005 trbrf-default                    act/unsup
+
+Switch#config t
+Switch(config)#interface range GigabitEthernet0/0-3
+Switch(config-if-range)#switchport trunk encapsulation dot1q
+Switch(config-if-range)#switchport mode trunk
+Switch(config-if-range)#switchport trunk native vlan 333
+Switch(config-if-range)#switchport trunk allowed vlan 20,333
+
+Switch#wr mem
+
+Для коммутаторов распределения:
+
+Switch#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#interface range Gi0/0-3, Gi1/0-3
+Switch(config-if-range)#switchport trunk encapsulation dot1q
+Switch(config-if-range)#switchport mode trunk
+Switch(config-if-range)#switchport trunk native vlan 333
+Switch(config-if-range)#switchport trunk allowed vlan 20,333
+
+PC1> ping 192.168.0.15
+
+84 bytes from 192.168.0.15 icmp_seq=1 ttl=64 time=7.751 ms
+84 bytes from 192.168.0.15 icmp_seq=2 ttl=64 time=3.344 ms
+84 bytes from 192.168.0.15 icmp_seq=3 ttl=64 time=9.524 ms
+84 bytes from 192.168.0.15 icmp_seq=4 ttl=64 time=8.701 ms
+84 bytes from 192.168.0.15 icmp_seq=5 ttl=64 time=3.456 ms
+
+PC1> ping 192.168.0.13
+
+84 bytes from 192.168.0.13 icmp_seq=1 ttl=64 time=2.873 ms
+84 bytes from 192.168.0.13 icmp_seq=2 ttl=64 time=8.600 ms
+84 bytes from 192.168.0.13 icmp_seq=3 ttl=64 time=10.336 ms
+84 bytes from 192.168.0.13 icmp_seq=4 ttl=64 time=7.004 ms
+84 bytes from 192.168.0.13 icmp_seq=5 ttl=64 time=8.317 ms
+
+PC1> ping 192.168.0.12
+
+host (192.168.0.12) not reachable
+
+PC1> ping 192.168.0.14
+
+host (192.168.0.14) not reachable
+
+PC1> ping 192.168.0.16
+
+host (192.168.0.16) not reachable
+
+
+PC2> ping 192.168.0.11
+
+host (192.168.0.11) not reachable
+
+PC2> ping 192.168.0.13
+
+host (192.168.0.13) not reachable
+
+PC2> ping 192.168.0.14
+
+84 bytes from 192.168.0.14 icmp_seq=1 ttl=64 time=4.672 ms
+84 bytes from 192.168.0.14 icmp_seq=2 ttl=64 time=3.078 ms
+84 bytes from 192.168.0.14 icmp_seq=3 ttl=64 time=1.866 ms
+84 bytes from 192.168.0.14 icmp_seq=4 ttl=64 time=5.850 ms
+84 bytes from 192.168.0.14 icmp_seq=5 ttl=64 time=4.797 ms
+
+PC2> ping 192.168.0.15
+
+host (192.168.0.15) not reachable
+
+PC2> ping 192.168.0.16
+
+84 bytes from 192.168.0.16 icmp_seq=1 ttl=64 time=6.043 ms
+84 bytes from 192.168.0.16 icmp_seq=2 ttl=64 time=9.692 ms
+84 bytes from 192.168.0.16 icmp_seq=3 ttl=64 time=10.194 ms
+84 bytes from 192.168.0.16 icmp_seq=4 ttl=64 time=6.024 ms
+84 bytes from 192.168.0.16 icmp_seq=5 ttl=64 time=7.634 ms
