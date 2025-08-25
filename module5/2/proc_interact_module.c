@@ -43,10 +43,8 @@ static ssize_t write_proc(struct file *filp,const char *buf,size_t count,loff_t 
 }
  
 static const struct proc_ops proc_fops = {
-proc_read:
-    read_proc,
-proc_write:
-    write_proc,
+    .proc_read = read_proc,
+    .proc_write = write_proc,
 };
  
  
