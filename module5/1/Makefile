@@ -1,5 +1,3 @@
-CC=x86_64-linux-gnu-gcc-13
-
 obj-m += hello_module.o
 
 all:
