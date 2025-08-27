@@ -1,6 +1,0 @@
-{
-    "files.associations": {
-        "netlink.h": "c",
-        "module.h": "c"
-    }
-}
