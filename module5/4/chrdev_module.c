@@ -23,6 +23,9 @@ static ssize_t device_write(struct file *, const char __user *, size_t, loff_t *
 #define SUCCESS 0 
 #define DEVICE_NAME "chardev" /* Dev name as it appears in /proc/devices   */ 
 #define BUF_LEN 80 /* Max length of the message from the device */ 
+#define BASEMINOR 0
+#define COUNT_BASEMINOR 1
+#define DYNAMIC_MAJOR 0
 /* Global variables are declared as static, so are global within the file. */ 
 
 static int major; /* major number assigned to our device driver */ 
@@ -43,7 +46,7 @@ static struct file_operations chardev_fops = {
 }; 
  
 static int __init chardev_init(void) { 
-    major = register_chrdev(0, DEVICE_NAME, &chardev_fops); 
+    major = __register_chrdev(DYNAMIC_MAJOR, BASEMINOR, COUNT_BASEMINOR, DEVICE_NAME, &chardev_fops); 
  
     if (major < 0) { 
         pr_alert("Registering char device failed with %d\n", major); 
@@ -52,7 +55,7 @@ static int __init chardev_init(void) {
     pr_info("I was assigned major number %d.\n", major); 
  
     cls = class_create(DEVICE_NAME); 
-    device_create(cls, NULL, MKDEV(major, 0), NULL, DEVICE_NAME); 
+    device_create(cls, NULL, MKDEV(major, BASEMINOR), NULL, DEVICE_NAME); 
     pr_info("Device created on /dev/%s\n", DEVICE_NAME); 
     return SUCCESS; 
 } 
@@ -62,7 +65,7 @@ static void __exit chardev_exit(void){
     class_destroy(cls); 
  
     /* Unregister the device */ 
-    unregister_chrdev(major, DEVICE_NAME); 
+    __unregister_chrdev(major, BASEMINOR, COUNT_BASEMINOR, DEVICE_NAME); 
 } 
  
 /* Methods */ 
@@ -137,4 +140,5 @@ static ssize_t device_write(struct file *filp, const char __user *buff,
  
 module_init(chardev_init); 
 module_exit(chardev_exit); 
+MODULE_AUTHOR("Novopashin");
 MODULE_LICENSE("GPL");
