@@ -6,7 +6,7 @@
 #include <unistd.h>
 
 #define NETLINK_USER 31
-
+#define FLAGS 0
 #define MAX_PAYLOAD 1024 /* maximum payload size*/
 struct sockaddr_nl src_addr, dest_addr;
 struct nlmsghdr *nlh = NULL;
@@ -36,7 +36,7 @@ void main()
     memset(nlh, 0, NLMSG_SPACE(MAX_PAYLOAD));
     nlh->nlmsg_len = NLMSG_SPACE(MAX_PAYLOAD);
     nlh->nlmsg_pid = getpid();
-    nlh->nlmsg_flags = 0;
+    nlh->nlmsg_flags = FLAGS;
 
     strcpy(NLMSG_DATA(nlh), "Hello");
 
@@ -48,11 +48,11 @@ void main()
     msg.msg_iovlen = 1;
 
     printf("Sending message to kernel\n");
-    sendmsg(sock_fd, &msg, 0);
+    sendmsg(sock_fd, &msg, FLAGS);
     printf("Waiting for message from kernel\n");
 
     /* Read message from kernel */
-    recvmsg(sock_fd, &msg, 0);
+    recvmsg(sock_fd, &msg, FLAGS);
     printf("Received message payload: %s\n", (char*)NLMSG_DATA(nlh));
     close(sock_fd);
 }
