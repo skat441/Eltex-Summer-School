@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "netlink.h": "c",
+        "socket.h": "c",
+        "stdio.h": "c",
+        "module.h": "c"
+    }
+}
