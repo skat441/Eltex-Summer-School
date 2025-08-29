@@ -13,4 +13,4 @@ $\Huge{\color{red}{\text{Not ready}}}$
 $\Huge{\color{green}{\textbf{Ready}}}$
 <h2>Module 5:</h2>
 
-$\Huge{\color{red}{\text{Not ready}}}$
+$\Huge{\color{green}{\textbf{Ready}}}$
