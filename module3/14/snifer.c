@@ -12,8 +12,8 @@
 
 // Структура для IP заголовка
 struct iphdr {
-    uint8_t version:4;
     uint8_t ihl:4;
+    uint8_t version:4;
     uint8_t tos;
     uint16_t tot_len;
     uint16_t id;
@@ -74,6 +74,7 @@ int main(){
         
         if (read_return > 0) {
             struct iphdr *ip = (struct iphdr*)buff;
+            printf("ip header size:%d ip version:%d\n",ip->ihl,ip->version);
             struct udphdr *udp = (struct udphdr*)(buff + (ip->ihl * 4));
             
             // Получаем адреса
@@ -86,6 +87,7 @@ int main(){
             
             // Вычисляем размер данных
             uint16_t ip_header_size = ip->ihl * 4;
+            printf("IP heade size:%d\n",ip_header_size);
             uint16_t udp_header_size = 8;
             uint16_t data_size = read_return - ip_header_size - udp_header_size;
             
