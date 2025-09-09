@@ -7,7 +7,7 @@ $\Huge{\color{green}{\textbf{Ready}}}$
 $\Huge{\color{green}{\textbf{Ready}}}$
 <h2>Module 3:</h2>
 
-$\Huge{\color{red}{\text{Not ready}}}$
+$\Huge{\color{green}{\textbf{Ready}}}$
 <h2>Module 4:</h2>
 
 $\Huge{\color{green}{\textbf{Ready}}}$
